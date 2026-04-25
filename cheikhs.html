@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Biographies des grands Cheikhs du Malouf tunisien — maîtres, compositeurs et gardiens du patrimoine musical." />
+  <title>Cheikhs — NoubaTN</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .cheikhs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .cheikh-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(13,27,42,0.07);
+    }
+    .cheikh-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(13,27,42,0.18);
+    }
+    .cheikh-photo {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--blue-primary);
+    }
+    .cheikh-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.5s ease;
+      filter: grayscale(15%);
+    }
+    .cheikh-card:hover .cheikh-photo img {
+      transform: scale(1.05);
+      filter: grayscale(0%);
+    }
+    .cheikh-photo::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(to top, rgba(13,27,42,0.65) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .cheikh-era-badge {
+      position: absolute;
+      bottom: 0.8rem;
+      left: 1rem;
+      font-family: var(--font-ui);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--lime);
+      z-index: 2;
+    }
+    .cheikh-photo-fallback {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-mid) 100%);
+      position: relative;
+    }
+    .cheikh-photo-fallback::before {
+      content: '';
+      position: absolute;
+      width: 180px; height: 180px;
+      border: 1px solid rgba(224,164,88,0.2);
+      border-radius: 50%;
+    }
+    .cheikh-initials-large {
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      font-weight: 700;
+      color: rgba(224,164,88,0.4);
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+    }
+    .cheikh-info {
+      padding: 1.4rem 1.5rem 1.6rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .cheikh-role {
+      font-family: var(--font-ui);
+      font-size: 0.56rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lime);
+      background: var(--blue-primary);
+      display: inline-block;
+      padding: 0.22rem 0.65rem;
+      border-radius: 2px;
+      margin-bottom: 0.5rem;
+    }
+    .cheikh-name {
+      font-family: var(--font-display);
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+      margin: 0.35rem 0 0.15rem;
+      line-height: 1.2;
+    }
+    .cheikh-era {
+      font-family: var(--font-ui);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      margin-bottom: 0.8rem;
+    }
+    .cheikh-info-divider {
+      width: 2.5rem;
+      height: 2px;
+      background: var(--lime);
+      margin: 0.6rem 0 0.85rem;
+    }
+    .cheikh-bio {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.65;
+      flex: 1;
+    }
+    @media (max-width: 1024px) { .cheikhs-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .cheikhs-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="NoubaTN — Accueil">
+        <img src="logo.jpg" alt="NoubaTN" class="logo-img" />
+        <span>
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <span class="logo-tagline">Patrimoine Malouf Tunisien</span>
+        </span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-hamburger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="bibliotheque.html">Bibliothèque</a></li>
+          <li><a href="cheikhs.html" class="active">Cheikhs</a></li>
+          <li><a href="patrimoine.html">Patrimoine</a></li>
+          <li><a href="evenements.html">Évènements</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <div class="container">
+        <ol class="breadcrumb-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li>Cheikhs</li>
+        </ol>
+      </div>
+    </nav>
+
+    <section class="page-hero" aria-label="En-tête Cheikhs">
+      <div class="container page-hero-inner">
+        <p class="page-hero-label">Maîtres</p>
+        <h1 class="page-hero-title">Les grands Cheikhs du Malouf</h1>
+        <p class="page-hero-subtitle">
+          Ces musiciens d'exception ont consacré leur existence à la maîtrise, à
+          l'interprétation et à la transmission du patrimoine Malouf tunisien.
+          Leurs noms demeurent inscrits dans la mémoire collective de la musique arabo-andalouse.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="cheikhs-title">
+      <div class="container">
+
+        <header class="section-header">
+          <span class="section-label">Biographies</span>
+          <h2 class="section-title" id="cheikhs-title">Portraits de Maîtres</h2>
+          <p class="section-subtitle">
+            Six figures majeures qui ont façonné, transmis et rayonné la tradition du Malouf tunisien à travers les décennies.
+          </p>
+        </header>
+        <div style="display:flex; gap:1rem; margin-bottom:2rem;">
+          <a href="search_cheikhs.php" style="padding:0.6rem 1.2rem; background:#2c3e50; color:#fff; border-radius:6px; text-decoration:none;">🔍 Rechercher un cheikh</a>
+          <a href="insert_cheikh.php" style="padding:0.6rem 1.2rem; background:#27ae60; color:#fff; border-radius:6px; text-decoration:none;">➕ Ajouter un cheikh</a>
+        </div>
+        <div class="cheikhs-grid">
+
+          <!-- 1 ─ Khemaïs Tarnane -->
+          <article class="cheikh-card">
+            <div class="cheikh-photo">
+              <img src="cheikh1.jpg"
+                   alt="Portrait de Khemaïs Tarnane"
+                   onerror="this.style.display='none';this.parentNode.querySelector('.cheikh-photo-fallback').style.display='flex';" />
+              <div class="cheikh-photo-fallback" style="display:none;position:absolute;inset:0;">
+                <span class="cheikh-initials-large">KT</span>
+              </div>
+              <span class="cheikh-era-badge">1894 – 1964 · Bizerte</span>
+            </div>
+            <div class="cheikh-info">
+              <span class="cheikh-role">Fondateur · Chanteur · Oudiste</span>
+              <h3 class="cheikh-name">Khemaïs Tarnane</h3>
+              <p class="cheikh-era">خميس ترنان — Père de La Rachidia</p>
+              <div class="cheikh-info-divider"></div>
+              <p class="cheikh-bio">
+                Voix tutélaire du Malouf tunisien, Khemaïs Tarnane est l'un des cofondateurs
+                de La Rachidia (1934), l'institution qui codifiera le répertoire pour les générations
+                suivantes. Issu d'une lignée andalouse, il forge son art dans les cafés de la Médina
+                avant de devenir le maître incontesté du chant classique tunisien. Il compose pour
+                Saliha et Naâma les œuvres maîtresses qui définissent l'esthétique du Malouf moderne.
+              </p>
+            </div>
+          </article>
+
+          <!-- 2 ─ Ali Sriti -->
+          <article class="cheikh-card">
+            <div class="cheikh-photo">
+              <img src="cheikh2.jpg"
+                   alt="Portrait de Ali Sriti"
+                   onerror="this.style.display='none';this.parentNode.querySelector('.cheikh-photo-fallback').style.display='flex';" />
+              <div class="cheikh-photo-fallback" style="display:none;position:absolute;inset:0;">
+                <span class="cheikh-initials-large">AS</span>
+              </div>
+              <span class="cheikh-era-badge">1919 – 2007 · Tunis</span>
+            </div>
+            <div class="cheikh-info">
+              <span class="cheikh-role">Virtuose · Oudiste · Pédagogue</span>
+              <h3 class="cheikh-name">Ali Sriti</h3>
+              <p class="cheikh-era">علي السريتي — Maître du maqam</p>
+              <div class="cheikh-info-divider"></div>
+              <p class="cheikh-bio">
+                Considéré comme l'un des plus grands oudistes du monde arabe, Ali Sriti incarne
+                pendant plus d'un demi-siècle l'excellence de la tradition savante du luth. Formé
+                à La Rachidia et auprès de maîtres turcs, il transmet l'art subtil des maqamat à des
+                générations de disciples, parmi lesquels Anouar Brahem et Lotfi Bouchnak. Lauréat du
+                Prix national de la musique (1987) et du Grand Cordon de l'Ordre du mérite national (1999).
+              </p>
+            </div>
+          </article>
+
+          <!-- 3 ─ Salah El Mahdi -->
+          <article class="cheikh-card">
+            <div class="cheikh-photo">
+              <img src="cheikh3.jpg"
+                   alt="Portrait de Salah El Mahdi"
+                   onerror="this.style.display='none';this.parentNode.querySelector('.cheikh-photo-fallback').style.display='flex';" />
+              <div class="cheikh-photo-fallback" style="display:none;position:absolute;inset:0;">
+                <span class="cheikh-initials-large">SM</span>
+              </div>
+              <span class="cheikh-era-badge">1925 – 2014 · Tunis</span>
+            </div>
+            <div class="cheikh-info">
+              <span class="cheikh-role">Musicologue · Compositeur · Chef d'orchestre</span>
+              <h3 class="cheikh-name">Salah El Mahdi</h3>
+              <p class="cheikh-era">صالح المهدي — Ziriab tunisien</p>
+              <div class="cheikh-info-divider"></div>
+              <p class="cheikh-bio">
+                Surnommé « Ziriab » en hommage au grand maître abbasside, Salah El Mahdi bâtit
+                les institutions musicales de la Tunisie indépendante. Il fonde l'Orchestre symphonique
+                tunisien (1969) et compose l'hymne national Ala Khallidi (1958). Docteur en musicologie,
+                son œuvre de plus de 600 compositions mêle tradition andalouse et formes symphoniques.
+                Le Conservatoire national de Tunis porte désormais son nom.
+              </p>
+            </div>
+          </article>
+
+          <!-- 4 ─ Zied Gharsa -->
+          <article class="cheikh-card">
+            <div class="cheikh-photo">
+              <img src="cheikh4.jpg"
+                   alt="Portrait de Zied Gharsa"
+                   onerror="this.style.display='none';this.parentNode.querySelector('.cheikh-photo-fallback').style.display='flex';" />
+              <div class="cheikh-photo-fallback" style="display:none;position:absolute;inset:0;">
+                <span class="cheikh-initials-large">ZG</span>
+              </div>
+              <span class="cheikh-era-badge">1963 – Présent · Tunis</span>
+            </div>
+            <div class="cheikh-info">
+              <span class="cheikh-role">Ténor · Compositeur · Oud · Violon</span>
+              <h3 class="cheikh-name">Zied Gharsa</h3>
+              <p class="cheikh-era">زياد غرسة — Héritier de Tarnane</p>
+              <div class="cheikh-info-divider"></div>
+              <p class="cheikh-bio">
+                Fils du maître Tahar Gharsa, lui-même disciple de Tarnane, Zied Gharsa est l'un
+                des interprètes contemporains les plus accomplis du Malouf et des mouachahat. Diplômé
+                en musique dès 14 ans, sa voix de ténor d'une rare pureté traverse le répertoire
+                classique tunisien, les maqamat andalous et les grandes formes de la musique arabe.
+                Il perpétue une lignée artistique directement issue des fondateurs de La Rachidia.
+              </p>
+            </div>
+          </article>
+
+          <!-- 5 ─ Lotfi Bouchnak -->
+          <article class="cheikh-card">
+            <div class="cheikh-photo">
+              <img src="cheikh5.jpg"
+                   alt="Portrait de Lotfi Bouchnak"
+                   onerror="this.style.display='none';this.parentNode.querySelector('.cheikh-photo-fallback').style.display='flex';" />
+              <div class="cheikh-photo-fallback" style="display:none;position:absolute;inset:0;">
+                <span class="cheikh-initials-large">LB</span>
+              </div>
+              <span class="cheikh-era-badge">1954 – Présent · Tunis</span>
+            </div>
+            <div class="cheikh-info">
+              <span class="cheikh-role">Chanteur · Oudiste · Ambassadeur ONU</span>
+              <h3 class="cheikh-name">Lotfi Bouchnak</h3>
+              <p class="cheikh-era">لطفي بوشناق — Le Pavarotti tunisien</p>
+              <div class="cheikh-info-divider"></div>
+              <p class="cheikh-bio">
+                Élève d'Ali Sriti et de Salah El Mahdi à La Rachidia, Lotfi Bouchnak est la voix
+                tunisienne la plus célèbre à travers le monde arabe. Surnommé « le Pavarotti tunisien »
+                pour son ténor d'exception, il excelle dans les noubas classiques, les mouachahat et
+                l'irtijel (improvisation vocale). Nommé Ambassadeur de paix par les Nations Unies,
+                il assure depuis quatre décennies le rayonnement international du Malouf.
+              </p>
+            </div>
+          </article>
+
+          <!-- 6 ─ Hédi Jouini -->
+          <article class="cheikh-card">
+            <div class="cheikh-photo">
+              <img src="cheikh6.jpg"
+                   alt="Portrait de Hédi Jouini"
+                   onerror="this.style.display='none';this.parentNode.querySelector('.cheikh-photo-fallback').style.display='flex';" />
+              <div class="cheikh-photo-fallback" style="display:none;position:absolute;inset:0;">
+                <span class="cheikh-initials-large">HJ</span>
+              </div>
+              <span class="cheikh-era-badge">1909 – 1990 · Tunis</span>
+            </div>
+            <div class="cheikh-info">
+              <span class="cheikh-role">Chanteur · Oudiste · Compositeur</span>
+              <h3 class="cheikh-name">Hédi Jouini</h3>
+              <p class="cheikh-era">الهادي الجويني — Légende de la chanson tunisienne</p>
+              <div class="cheikh-info-divider"></div>
+              <p class="cheikh-bio">
+                Révélé au Théâtre Municipal de Tunis, Hédi Jouini devient dès 1938 la voix
+                emblématique de Radio Tunis. Directeur artistique de l'Orchestre national de la
+                Radio tunisienne durant trois décennies, il signe près de 1 070 compositions et
+                56 opérettes, mêlant héritage andalou, flamenco et musique populaire. Décoré par
+                le président Bourguiba en 1966, son œuvre continue de traverser les générations.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ LA RACHIDIA ════ -->
+    <section class="section section-dark" aria-labelledby="rachidia-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label" style="background: rgba(224,164,88,0.15); color: var(--lime);">Institution</span>
+          <h2 class="section-title" id="rachidia-title">La Rachidia</h2>
+          <p class="section-subtitle">
+            Fondée en 1934, la Rachidia est l'institution musicale phare qui a codifié,
+            sauvegardé et diffusé le Malouf tunisien jusqu'à nos jours.
+          </p>
+        </header>
+        <div class="cards-grid cards-grid-4">
+          <div class="mission-item" style="background: rgba(255,255,255,0.05); border-color: rgba(224,164,88,0.2); border-top-color: var(--lime);">
+            <h3 class="mission-title" style="color: var(--lime);">1934</h3>
+            <p class="mission-text" style="color: var(--cream);">Année de fondation, cofondée par Khemaïs Tarnane — première institution musicale dédiée au Malouf tunisien.</p>
+          </div>
+          <div class="mission-item" style="background: rgba(255,255,255,0.05); border-color: rgba(224,164,88,0.2); border-top-color: var(--lime);">
+            <h3 class="mission-title" style="color: var(--lime);">Archives sonores</h3>
+            <p class="mission-text" style="color: var(--cream);">Des centaines d'heures d'enregistrements historiques préservant les interprétations des grands maîtres.</p>
+          </div>
+          <div class="mission-item" style="background: rgba(255,255,255,0.05); border-color: rgba(224,164,88,0.2); border-top-color: var(--lime);">
+            <h3 class="mission-title" style="color: var(--lime);">Formation</h3>
+            <p class="mission-text" style="color: var(--cream);">Génèrations de musiciens formés aux maqamat et à la théorie du Malouf, de Bouchnak à Anouar Brahem.</p>
+          </div>
+          <div class="mission-item" style="background: rgba(255,255,255,0.05); border-color: rgba(224,164,88,0.2); border-top-color: var(--lime);">
+            <h3 class="mission-title" style="color: var(--lime);">Rayonnement</h3>
+            <p class="mission-text" style="color: var(--cream);">Représentante du Malouf sur les scènes internationales depuis plus de 90 ans, de Carthage à l'Opéra du Caire.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-banner" aria-label="Appel à l'action">
+      <div class="container">
+        <h2>Explorez le patrimoine musical</h2>
+        <p>Découvrez les instruments qui donnent vie au Malouf et leur histoire séculaire.</p>
+        <a href="patrimoine.html" class="btn btn-primary">Instruments du Malouf</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" aria-label="Pied de page">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <p class="footer-tagline">La plateforme numérique dédiée à la préservation et à la promotion du patrimoine Malouf tunisien.</p>
+          <span class="footer-ensi">Projet ENSI · La Manouba</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="bibliotheque.html">Bibliothèque</a></li>
+            <li><a href="cheikhs.html">Cheikhs</a></li>
+            <li><a href="patrimoine.html">Patrimoine</a></li>
+            <li><a href="evenements.html">Évènements</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Les Cheikhs</h4>
+          <ul>
+            <li><a href="cheikhs.html">Khemaïs Tarnane</a></li>
+            <li><a href="cheikhs.html">Ali Sriti</a></li>
+            <li><a href="cheikhs.html">Salah El Mahdi</a></li>
+            <li><a href="cheikhs.html">Zied Gharsa</a></li>
+            <li><a href="cheikhs.html">Lotfi Bouchnak</a></li>
+            <li><a href="cheikhs.html">Hédi Jouini</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Informations</h4>
+          <ul>
+            <li><a href="apropos.html">Le projet</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 NoubaTN — Tous droits réservés</p>
+        <p class="footer-note">École Nationale des Sciences de l'Informatique · ENSI, La Manouba, Tunisie</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

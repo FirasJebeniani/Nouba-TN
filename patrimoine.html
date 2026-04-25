@@ -1,0 +1,341 @@
+// Auteurs : May Hamrouni & Firas Jebiniani
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Instruments du Malouf tunisien — oud, darbouka, nay, rabab, kanoun et bien d'autres." />
+  <title>Patrimoine — NoubaTN</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Instrument cards with real photos ── */
+    .instrument-card {
+      background: var(--blue-primary);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .instrument-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+    .instrument-photo {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #0a1520;
+      position: relative;
+    }
+    .instrument-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.5s ease;
+      filter: brightness(0.92);
+    }
+    .instrument-card:hover .instrument-photo img { transform: scale(1.06); filter: brightness(1); }
+    .instrument-photo::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(13,27,42,0.8) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .instrument-body { padding: 1.25rem 1.4rem 1.5rem; flex: 1; }
+    .instrument-name {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--lime); margin-bottom: 0.2rem;
+    }
+    .instrument-type {
+      font-family: var(--font-ui); font-size: 0.58rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 0.75rem;
+    }
+    .instrument-desc { font-size: 0.88rem; color: var(--cream); line-height: 1.65; }
+  </style>
+</head>
+<body>
+
+  <!-- ════ HEADER ════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="NoubaTN — Accueil">
+        <img src="logo.jpg" alt="NoubaTN" class="logo-img" />
+        <span>
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <span class="logo-tagline">Patrimoine Malouf Tunisien</span>
+        </span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-hamburger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="bibliotheque.html">Bibliothèque</a></li>
+          <li><a href="cheikhs.html">Cheikhs</a></li>
+          <li><a href="patrimoine.html" class="active">Patrimoine</a></li>
+          <li><a href="evenements.html">Évènements</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ════ BREADCRUMB ════ -->
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <div class="container">
+        <ol class="breadcrumb-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li>Patrimoine</li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- ════ PAGE HERO ════ -->
+    <section class="page-hero" aria-label="En-tête Patrimoine">
+      <div class="container page-hero-inner">
+        <p class="page-hero-label">Instruments</p>
+        <h1 class="page-hero-title">Patrimoine instrumental du Malouf</h1>
+        <p class="page-hero-subtitle">
+          Les instruments du Malouf tunisien forment un orchestre d'une richesse
+          exceptionnelle. Chacun possède une identité propre, une histoire et un rôle
+          spécifique dans la texture musicale des Noubas.
+        </p>
+      </div>
+    </section>
+
+    <!-- ════ INSTRUMENTS GRID ════ -->
+    <section class="section" aria-labelledby="instruments-title">
+      <div class="container">
+
+        <header class="section-header">
+          <span class="section-label">Collection</span>
+          <h2 class="section-title" id="instruments-title">Les instruments du Malouf</h2>
+        </header>
+
+                <div class="cards-grid">
+
+          <!-- Oud -->
+          <article class="instrument-card">
+            <div class="instrument-photo">
+              <img src="inst_oud.jpg" alt="Le Oud — العود" />
+            </div>
+            <div class="instrument-body">
+              <h3 class="instrument-name">Oud · العود</h3>
+              <p class="instrument-type">Cordophone · Pincé · Manche court</p>
+              <p class="instrument-desc">
+                Luth à manche court sans frettes, le Oud est le roi des instruments
+                de la musique arabe classique. Son corps en forme de poire et ses 11 ou 13 cordes
+                en font un instrument d'une richesse sonore incomparable. Il joue un rôle central
+                dans l'improvisation modale (taksim) qui précède chaque Nouba.
+              </p>
+            </div>
+          </article>
+
+          <!-- Kanoun -->
+          <article class="instrument-card">
+            <div class="instrument-photo">
+              <img src="inst_kanoun.jpg" alt="Le Kanoun — القانون" />
+            </div>
+            <div class="instrument-body">
+              <h3 class="instrument-name">Kanoun · القانون</h3>
+              <p class="instrument-type">Cordophone · Pincé · Trapézoïdal</p>
+              <p class="instrument-desc">
+                Cithare trapézoïdale à 78 cordes (3 par note), le Kanoun permet
+                une précision modale exceptionnelle grâce à ses mandales — petits leviers
+                permettant d'affiner chaque note selon le mode joué. Il constitue la
+                colonne vertébrale harmonique de l'ensemble de Malouf.
+              </p>
+            </div>
+          </article>
+
+          <!-- Rabab -->
+          <article class="instrument-card">
+            <div class="instrument-photo">
+              <img src="inst_rabab.jpg" alt="Le Rabab — الرباب" />
+            </div>
+            <div class="instrument-body">
+              <h3 class="instrument-name">Rabab · الرباب</h3>
+              <p class="instrument-type">Cordophone · Frotté · Archet</p>
+              <p class="instrument-desc">
+                L'une des plus anciennes vièles à archet de la tradition arabo-berbère,
+                le Rabab possède un timbre nasal et expressif qui imite la voix humaine.
+                Son répertoire de techniques ornementales — glissandos, trilles et vibrato —
+                en fait un soliste incomparable dans les Noubas lentes.
+              </p>
+            </div>
+          </article>
+
+          <!-- Kamanja -->
+          <article class="instrument-card">
+            <div class="instrument-photo">
+              <img src="inst_kamanja.jpg" alt="La Kamanja — الكمنجة" />
+            </div>
+            <div class="instrument-body">
+              <h3 class="instrument-name">Kamanja · الكمنجة</h3>
+              <p class="instrument-type">Cordophone · Frotté · Violon oriental</p>
+              <p class="instrument-desc">
+                Adaptation orientale du violon européen, la Kamanja est tenue
+                verticalement, piquée sur le genou. Introduite au XIXe siècle,
+                elle est devenue incontournable dans les ensembles modernes de Malouf,
+                portant les lignes mélodiques les plus ornementées.
+              </p>
+            </div>
+          </article>
+
+          <!-- Nay -->
+          <article class="instrument-card">
+            <div class="instrument-photo">
+              <img src="inst_nay.webp" alt="Le Nay — الناي" />
+            </div>
+            <div class="instrument-body">
+              <h3 class="instrument-name">Nay · الناي</h3>
+              <p class="instrument-type">Aérophone · Flûte oblique · Roseau</p>
+              <p class="instrument-desc">
+                Flûte en roseau au timbre ensorcelant, le Nay est l'un des plus anciens
+                instruments du monde. Son souffle évoque le soupir de l'âme arrachée
+                à son origine. Il joue les lignes mélismatiques les plus ornementées
+                des Noubas lentes et des passages contemplatifs.
+              </p>
+            </div>
+          </article>
+
+          <!-- Darbouka -->
+          <article class="instrument-card">
+            <div class="instrument-photo">
+              <img src="inst_darbouka.jpg" alt="La Darbouka — الدربوكة" />
+            </div>
+            <div class="instrument-body">
+              <h3 class="instrument-name">Darbouka · الدربوكة</h3>
+              <p class="instrument-type">Membranophone · Percussion gobelet</p>
+              <p class="instrument-desc">
+                Tambour gobelet en céramique ou en métal, la Darbouka est le pouls
+                du Malouf. Ses frappes — doum, tak, ka — définissent les cycles
+                rythmiques (iqa'at) de chaque mouvement de la Nouba.
+                Sa richesse de timbres en fait un véritable instrument soliste.
+              </p>
+            </div>
+          </article>
+
+          <!-- Bendir -->
+          <article class="instrument-card">
+            <div class="instrument-photo">
+              <img src="inst_bendir.jpg" alt="Le Bendir — البندير" />
+            </div>
+            <div class="instrument-body">
+              <h3 class="instrument-name">Bendir · البندير</h3>
+              <p class="instrument-type">Membranophone · Cadre circulaire</p>
+              <p class="instrument-desc">
+                Grand tambour sur cadre circulaire, le Bendir possède un timbre grave
+                et bourdonnant dû à ses cordes de boyau tendues sous la membrane.
+                Instrument à la fois rythmique et contemplatif, il est particulièrement
+                présent dans les cérémonies soufies associées au Malouf.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tarr -->
+          <article class="instrument-card">
+            <div class="instrument-photo">
+              <img src="inst_tarr.jpg" alt="Le Tarr — الطار" />
+            </div>
+            <div class="instrument-body">
+              <h3 class="instrument-name">Tarr · الطار</h3>
+              <p class="instrument-type">Membranophone · Tambourin à cymbalettes</p>
+              <p class="instrument-desc">
+                Tambourin à cadre orné de cymbalettes en métal, le Tarr combine
+                timbre membranaire et tintement métallique. Il marque les accents
+                forts des rythmes et accompagne le chant dans les mouvements
+                les plus festifs des Noubas.
+              </p>
+            </div>
+          </article>
+
+          <!-- Naqqarat -->
+          <article class="instrument-card">
+            <div class="instrument-photo">
+              <img src="inst_naqqarat.jpg" alt="Les Naqqarat — النقارات" />
+            </div>
+            <div class="instrument-body">
+              <h3 class="instrument-name">Naqqarat · النقارات</h3>
+              <p class="instrument-type">Membranophone · Timbales jumelées</p>
+              <p class="instrument-desc">
+                Paire de petits tambours hémisphériques en argile ou en métal, les Naqqarat
+                produisent deux hauteurs de son distinctes. Héritage de la tradition
+                andalouse et ottomane, ils ponctuent les tempos les plus vifs et
+                marquent les transitions entre les mouvements de la Nouba.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ CTA ════ -->
+    <section class="cta-banner" aria-label="Appel à l'action">
+      <div class="container">
+        <h2>Vivez le Malouf en concert</h2>
+        <p>Retrouvez l'agenda des concerts, festivals et événements culturels autour du Malouf tunisien.</p>
+        <a href="evenements.html" class="btn btn-primary">Voir les évènements</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="site-footer" aria-label="Pied de page">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <p class="footer-tagline">La plateforme numérique dédiée à la préservation et à la promotion du patrimoine Malouf tunisien.</p>
+          <span class="footer-ensi">Projet ENSI · La Manouba</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="bibliotheque.html">Bibliothèque</a></li>
+            <li><a href="cheikhs.html">Cheikhs</a></li>
+            <li><a href="patrimoine.html">Patrimoine</a></li>
+            <li><a href="evenements.html">Évènements</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Instruments</h4>
+          <ul>
+            <li><a href="patrimoine.html">Oud</a></li>
+            <li><a href="patrimoine.html">Kanoun</a></li>
+            <li><a href="patrimoine.html">Nay</a></li>
+            <li><a href="patrimoine.html">Darbouka</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Informations</h4>
+          <ul>
+            <li><a href="apropos.html">Le projet</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 NoubaTN — Tous droits réservés</p>
+        <p class="footer-note">École Nationale des Sciences de l'Informatique · ENSI, La Manouba, Tunisie</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

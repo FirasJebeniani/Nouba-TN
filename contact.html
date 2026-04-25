@@ -1,0 +1,624 @@
+// Auteurs : May Hamrouni & Firas Jebiniani
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contactez l'équipe NoubaTN — questions, contributions, partenariats et soumission d'évènements." />
+  <title>Contact — NoubaTN</title>
+  <link rel="stylesheet" href="style.css" />
+
+
+  <style>
+
+    /* ── Galerie d'images ── */
+.galerie-section {
+      background: var(--cream-light);
+      padding: 3rem 0;
+      border-top: 1px solid rgba(26,35,126,0.08);
+      border-bottom: 1px solid rgba(26,35,126,0.08);
+    }
+
+    .galerie-titre {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--blue-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .galerie-desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .galerie-conteneur {
+      position: relative;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-hover);
+      background: var(--blue-primary);
+      aspect-ratio: 16/7;
+    }
+
+    #galerie-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: opacity 0.4s ease;
+    }
+
+    .galerie-legende-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(13,27,42,0.9) 0%, transparent 100%);
+      padding: 1.5rem 1.5rem 1rem;
+      color: var(--white);
+    }
+
+    #galerie-legende {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--cream);
+    }
+
+    .galerie-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    #galerie-points {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .galerie-point {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(26,35,126,0.2);
+      border: 2px solid rgba(26,35,126,0.2);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .galerie-point.actif {
+      background: var(--blue-primary);
+      border-color: var(--blue-primary);
+    }
+
+    .galerie-nav-btn {
+      background: var(--blue-primary);
+      color: var(--lime);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .galerie-nav-btn:hover { background: var(--blue-mid); }
+
+    /* ── Liens vers nouvelles pages ── */
+    .liens-nouvelles-pages {
+      background: var(--blue-primary);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+
+    .liens-nouvelles-pages h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--lime);
+      margin-bottom: 1rem;
+    }
+
+    .liens-grille {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width:600px) { .liens-grille { grid-template-columns: 1fr; } }
+
+    .lien-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(224,164,88,0.2);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+      display: block;
+    }
+
+    .lien-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--lime);
+    }
+
+    .lien-card .lien-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .lien-card .lien-titre {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .lien-card .lien-desc {
+      font-size: 0.82rem;
+      color: var(--cream);
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ HEADER ════ -->
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="NoubaTN — Accueil">
+        <img src="logo.jpg" alt="NoubaTN" class="logo-img" />
+        <span>
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <span class="logo-tagline">Patrimoine Malouf Tunisien</span>
+        </span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-hamburger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="bibliotheque.html">Bibliothèque</a></li>
+          <li><a href="cheikhs.html">Cheikhs</a></li>
+          <li><a href="patrimoine.html">Patrimoine</a></li>
+          <li><a href="evenements.html">Évènements</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ════ BANNIÈRE ANIMÉE ════ -->
+    <div id="banniere-container" style="
+      background: var(--blue-primary);
+      color: var(--lime);
+      padding: 0.6rem 0;
+      overflow: hidden;
+        white-space: nowrap;
+      border-bottom: 2px solid var(--lime);
+      ">
+      <span id="banniere-texte" style="
+        display: inline-block;
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        animation: defilement 20s linear infinite;
+      "></span>
+    </div>
+
+    <style>
+      @keyframes defilement {
+      from { transform: translateX(100vw); }
+      to   { transform: translateX(-100%); }
+      }
+    </style>
+
+    <!-- ════ BREADCRUMB ════ -->
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <div class="container">
+        <ol class="breadcrumb-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li>Contact</li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- ════ PAGE HERO ════ -->
+    <section class="page-hero" aria-label="En-tête Contact">
+      <div class="container page-hero-inner">
+        <p class="page-hero-label">Nous écrire</p>
+        <h1 class="page-hero-title">Contactez NoubaTN</h1>
+        <p class="page-hero-subtitle">
+          Une question, une contribution, un partenariat ou un évènement à soumettre ?
+          Nous sommes à votre écoute. L'équipe NoubaTN répond à tous les messages
+          dans un délai de 48 heures.
+        </p>
+      </div>
+    </section>
+
+    <!-- ════ CONTACT SECTION ════ -->
+    <section class="section" aria-labelledby="contact-title">
+      <div class="container">
+
+        <div class="contact-layout">
+
+          <!-- Contact Info -->
+          <aside>
+            <h2 id="contact-title" class="section-title" style="font-size: 1.8rem;">Restons en contact</h2>
+            <p>
+              NoubaTN est un projet ouvert et collaboratif. Que vous soyez musicien,
+              chercheur, étudiant, journaliste ou simple passionné du Malouf, votre
+              contribution est la bienvenue.
+            </p>
+
+            <div style="margin: 2rem 0;">
+
+              <div class="contact-detail">
+                <span class="contact-detail-icon"></span>
+                <div class="contact-detail-text">
+                  <strong>E-mail</strong>
+                  <span>contact@noubatn.tn</span>
+                </div>
+              </div>
+
+              <div class="contact-detail">
+                <span class="contact-detail-icon"></span>
+                <div class="contact-detail-text">
+                  <strong>Adresse</strong>
+                  <span>ENSI, Avenue de l'ENSI<br>2010 La Manouba, Tunis, Tunisie</span>
+                </div>
+              </div>
+
+              <div class="contact-detail">
+                <span class="contact-detail-icon"></span>
+                <div class="contact-detail-text">
+                  <strong>Téléphone</strong>
+                  <span>+216 71 600 500</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Types de demandes -->
+            <div style="background: var(--cream-light); border-left: 3px solid var(--lime); padding: 1.5rem; border-radius: var(--radius-card);">
+              <h3 style="font-family: var(--font-display); font-size: 1.1rem; color: var(--blue-primary); margin-bottom: 1rem;">Types de demandes</h3>
+              <ul style="list-style: none; padding: 0;">
+                <li style="padding: 0.4rem 0; font-size: 0.9rem; color: #555; border-bottom: 1px solid rgba(0,0,0,0.05);"> Contribution au contenu musical</li>
+                <li style="padding: 0.4rem 0; font-size: 0.9rem; color: #555; border-bottom: 1px solid rgba(0,0,0,0.05);"> Soumission d'un évènement</li>
+                <li style="padding: 0.4rem 0; font-size: 0.9rem; color: #555; border-bottom: 1px solid rgba(0,0,0,0.05);"> Proposition de partenariat</li>
+                <li style="padding: 0.4rem 0; font-size: 0.9rem; color: #555; border-bottom: 1px solid rgba(0,0,0,0.05);"> Demande presse / médias</li>
+                <li style="padding: 0.4rem 0; font-size: 0.9rem; color: #555;"> Question générale</li>
+              </ul>
+            </div>
+
+          </aside>
+
+          <!-- Contact Form -->
+          <div>
+            <div class="contact-form">
+              <h2 style="font-family: var(--font-display); font-size: 1.5rem; color: var(--blue-primary); margin-bottom: 0.5rem;">Envoyer un message</h2>
+              <p style="font-size: 0.9rem; color: #777; margin-bottom: 2rem;">
+                Tous les champs marqués d'un * sont obligatoires.
+              </p>
+
+              <!-- NOTE: Formulaire HTML statique (Phase 1 — sans traitement serveur) -->
+              <form action="traitement_contact.php" method="post" novalidate aria-label="Formulaire de contact NoubaTN">
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="prenom">Prénom *</label>
+                    <input
+                      type="text"
+                      id="prenom"
+                      name="prenom"
+                      placeholder="Votre prénom"
+                      required
+                      autocomplete="given-name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="nom">Nom *</label>
+                    <input
+                      type="text"
+                      id="nom"
+                      name="nom"
+                      placeholder="Votre nom de famille"
+                      required
+                      autocomplete="family-name"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Adresse e-mail *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="votre@email.com"
+                    required
+                    autocomplete="email"
+                  />
+                </div>
+
+
+                <div class="form-group">
+                  <label for="sujet">Sujet de la demande *</label>
+                  <select id="sujet" name="sujet" required>
+                    <option value="" disabled selected>Choisissez un sujet</option>
+                    <option value="contribution">Contribution au contenu musical</option>
+                    <option value="evenement">Soumission d'un évènement</option>
+                    <option value="partenariat">Proposition de partenariat</option>
+                    <option value="presse">Demande presse / médias</option>
+                    <option value="recherche">Collaboration académique / recherche</option>
+                    <option value="autre">Autre / Question générale</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="message">Message *</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Décrivez votre demande en détail..."
+                    required
+                    rows="6"
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="telephone">Téléphone (facultatif)</label>
+                  <input
+                    type="tel"
+                    id="telephone"
+                    name="telephone"
+                    placeholder="+216 XX XXX XXX"
+                    autocomplete="tel"
+                  />
+                </div>
+
+                <!-- Consentement RGPD -->
+                <div class="form-group" style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                  <input
+                    type="checkbox"
+                    id="consentement"
+                    name="consentement"
+                    required
+                    style="width: auto; margin-top: 0.25rem; flex-shrink: 0;"
+                  />
+                  <label for="consentement" style="font-family: var(--font-body); font-size: 0.85rem; text-transform: none; letter-spacing: normal; color: #555; cursor: pointer;">
+                    J'accepte que mes données soient utilisées par l'équipe NoubaTN
+                    dans le cadre du traitement de ma demande, conformément à la
+                    politique de confidentialité du projet. *
+                  </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 0.8rem; padding: 1rem;">
+                  Envoyer le message
+                </button>
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ MAP / LOCALISATION ════ -->
+    <section class="section section-alt" aria-labelledby="localisation-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Localisation</span>
+          <h2 class="section-title" id="localisation-title">Où nous trouver</h2>
+        </header>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+          <div>
+            <p style="color: #555; line-height: 1.8; margin-bottom: 1.5rem;">
+              Le projet NoubaTN est hébergé au sein de l'<strong>École Nationale des Sciences
+              de l'Informatique (ENSI)</strong>, établissement public d'enseignement supérieur
+              situé à La Manouba, dans la banlieue nord-ouest de Tunis.
+            </p>
+            <p style="color: #555; line-height: 1.8; margin-bottom: 1.5rem;">
+              L'ENSI est accessible en métro léger (ligne TGM), en bus ou en voiture
+              depuis le centre de Tunis, à environ 20 minutes du centre-ville.
+            </p>
+            <div style="background: var(--blue-primary); color: var(--white); padding: 1.5rem; border-radius: var(--radius-card);">
+              <p style="font-family: var(--font-ui); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lime); margin-bottom: 0.75rem;">Adresse complète</p>
+              <address style="font-style: normal; line-height: 1.8; color: var(--cream);">
+                École Nationale des Sciences de l'Informatique<br>
+                Avenue de l'ENSI, Campus Universitaire<br>
+                2010 La Manouba<br>
+                Gouvernorat de la Manouba, Tunisie<br>
+                <br>
+                <a href="mailto:contact@noubatn.tn" style="color: var(--lime);">contact@noubatn.tn</a>
+              </address>
+            </div>
+          </div>
+
+          <!-- Carte réelle ENSI -->
+          <div style="border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-hover); border: 3px solid var(--lime);">
+            <img src="map_ensi.png" alt="Localisation ENSI — La Manouba, Tunis" style="width: 100%; display: block; height: 360px; object-fit: cover; object-position: center;" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ FAQ ════ -->
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">FAQ</span>
+          <h2 class="section-title" id="faq-title">Questions fréquentes</h2>
+        </header>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 800px;">
+
+          <details style="background: var(--cream-light); border: 1px solid rgba(26,35,126,0.1); border-radius: var(--radius-card); padding: 1.5rem;">
+            <summary style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--blue-primary); cursor: pointer;">Comment contribuer au contenu de NoubaTN ?</summary>
+            <p style="margin-top: 1rem; color: #555; line-height: 1.7;">
+              Vous pouvez contribuer en soumettant des informations via notre formulaire de contact,
+              en sélectionnant l'option «&nbsp;Contribution au contenu musical&nbsp;». Notre équipe
+              éditoriale évaluera votre contribution et reviendra vers vous dans les meilleurs délais.
+            </p>
+          </details>
+
+          <details style="background: var(--cream-light); border: 1px solid rgba(26,35,126,0.1); border-radius: var(--radius-card); padding: 1.5rem;">
+            <summary style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--blue-primary); cursor: pointer;">Le contenu de NoubaTN est-il librement utilisable ?</summary>
+            <p style="margin-top: 1rem; color: #555; line-height: 1.7;">
+              Le contenu de NoubaTN est destiné à un usage éducatif et de recherche. Pour toute
+              utilisation commerciale ou publication, merci de nous contacter pour obtenir les
+              autorisations nécessaires. Les biographies des Cheikhs et les descriptions des
+              instruments sont soumises aux droits d'auteur de NoubaTN.
+            </p>
+          </details>
+
+          <details style="background: var(--cream-light); border: 1px solid rgba(26,35,126,0.1); border-radius: var(--radius-card); padding: 1.5rem;">
+            <summary style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--blue-primary); cursor: pointer;">Comment soumettre un évènement à l'agenda ?</summary>
+            <p style="margin-top: 1rem; color: #555; line-height: 1.7;">
+              Utilisez notre formulaire de contact en sélectionnant «&nbsp;Soumission d'un évènement&nbsp;».
+              Précisez le nom de l'évènement, la date, le lieu, la description et les informations
+              de contact des organisateurs. Nous publions les évènements en rapport avec le Malouf
+              et la musique arabo-andalouse en général.
+            </p>
+          </details>
+
+          <details style="background: var(--cream-light); border: 1px solid rgba(26,35,126,0.1); border-radius: var(--radius-card); padding: 1.5rem;">
+            <summary style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--blue-primary); cursor: pointer;">NoubaTN propose-t-il des formations ou des ateliers ?</summary>
+            <p style="margin-top: 1rem; color: #555; line-height: 1.7;">
+              Pour l'instant, NoubaTN est une plateforme de documentation et d'information. Des
+              partenariats avec des conservatoires et écoles de musique sont en cours pour proposer
+              dans les prochaines phases du projet des ressources pédagogiques interactives et
+              des modules de formation en ligne.
+            </p>
+          </details>
+
+        </div>
+      </div>
+    </section>
+<!-- ============================================================
+         GALERIE D'IMAGES — Partie 3
+         Rotation automatique (min 3 secondes par image) via contact.js
+    ============================================================ -->
+    <section class="galerie-section" aria-labelledby="galerie-title">
+      <div class="container">
+        <h2 class="galerie-titre" id="galerie-title"> Galerie — Les Cheikhs du Malouf</h2>
+        <p class="galerie-desc">
+        </p>
+
+        <div class="galerie-conteneur">
+          <!-- Image courante — src et alt mis à jour par contact.js -->
+          <img id="galerie-img" src="cheikh1.jpg" alt="Khemaïs Tarnane" />
+
+          <!-- Barre de légende en bas de l'image -->
+          <div class="galerie-legende-bar">
+            <p id="galerie-legende">Khemaïs Tarnane — Père de La Rachidia (1894–1964)</p>
+          </div>
+        </div>
+
+        <!-- Contrôles de la galerie -->
+        <div class="galerie-controls">
+          <button id="galerie-prev" class="galerie-nav-btn" aria-label="Image précédente">&#8592;</button>
+          <!-- Points indicateurs générés dynamiquement par contact.js -->
+          <div id="galerie-points" role="tablist" aria-label="Navigation galerie"></div>
+          <button id="galerie-next" class="galerie-nav-btn" aria-label="Image suivante">&#8594;</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         LIENS VERS LES NOUVELLES PAGES — Partie 3
+    ============================================================ -->
+    <section class="section" aria-label="Nouvelles pages du site">
+      <div class="container">
+        <div class="liens-nouvelles-pages">
+          <h3> Découvrez les nouvelles pages du site</h3>
+          <div class="liens-grille">
+
+            <!-- Lien vers le Questionnaire -->
+            <a href="questionnaire.html" class="lien-card">
+              <span class="lien-icon"></span>
+              <p class="lien-titre">Questionnaire</p>
+              <p class="lien-desc">Partagez votre avis sur le Malouf et NoubaTN. Formulaire interactif avec validation JavaScript.</p>
+            </a>
+
+            <!-- Lien vers la Fun Page -->
+            <a href="funpage.html" class="lien-card">
+              <span class="lien-icon"></span>
+              <p class="lien-titre">Fun Page — Quiz Malouf</p>
+              <p class="lien-desc">Testez vos connaissances sur les Cheikhs, les Noubas et les instruments en 10 questions.</p>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="site-footer" aria-label="Pied de page">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <p class="footer-tagline">La plateforme numérique dédiée à la préservation et à la promotion du patrimoine Malouf tunisien.</p>
+          <span class="footer-ensi">Projet ENSI · La Manouba</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="bibliotheque.html">Bibliothèque</a></li>
+            <li><a href="cheikhs.html">Cheikhs</a></li>
+            <li><a href="patrimoine.html">Patrimoine</a></li>
+            <li><a href="evenements.html">Évènements</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="contact.html">Formulaire de contact</a></li>
+            <li><a href="mailto:contact@noubatn.tn">contact@noubatn.tn</a></li>
+            <li><a href="contact.html">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Informations</h4>
+          <ul>
+            <li><a href="apropos.html">Le projet</a></li>
+            <li><a href="apropos.html">L'équipe</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 NoubaTN — Tous droits réservés</p>
+        <p class="footer-note">École Nationale des Sciences de l'Informatique · ENSI, La Manouba, Tunisie</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script JS : bannière animée + galerie -->
+  <script src="contact.js"></script>
+
+</body>
+</html>

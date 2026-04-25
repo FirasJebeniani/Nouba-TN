@@ -1,0 +1,623 @@
+// Auteurs : May Hamrouni & Firas Jebiniani
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Questionnaire NoubaTN — Donnez votre avis sur le Malouf tunisien." />
+  <title>Questionnaire — NoubaTN</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ============================================================
+       STYLES SPÉCIFIQUES — questionnaire.html
+       ============================================================ -->
+  <style>
+    /* ── Mise en page principale ── */
+    .questionnaire-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .questionnaire-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Panneau latéral d'information ── */
+    .side-info {
+      background: var(--blue-primary);
+      color: var(--white);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      position: sticky;
+      top: 90px;
+    }
+
+    .side-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--lime);
+      margin-bottom: 1rem;
+    }
+
+    .side-info p {
+      font-size: 0.9rem;
+      color: var(--cream);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .side-info ul {
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--cream);
+      line-height: 2;
+    }
+
+    .side-info ul li::before {
+      content: " ";
+      color: var(--lime);
+    }
+
+    /* ── Carte du formulaire ── */
+    .questionnaire-card {
+      background: var(--white);
+      border: 1px solid rgba(26,35,126,0.1);
+      border-radius: var(--radius-card);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* ── Groupes de formulaire ── */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label.label-main {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue-primary);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(26,35,126,0.2);
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-body);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--blue-primary);
+      box-shadow: 0 0 0 3px rgba(26,35,126,0.08);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    /* ── Messages d'erreur ── */
+    .msg-erreur {
+      color: #c0392b;
+      font-size: 0.82rem;
+      margin-top: 0.35rem;
+      display: none;
+      padding: 0.4rem 0.7rem;
+      background: rgba(192,57,43,0.06);
+      border-radius: 4px;
+      border-left: 3px solid #c0392b;
+    }
+
+    /* ── Groupe radio ── */
+    .radio-group, .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .radio-option, .checkbox-option {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      padding: 0.6rem 0.9rem;
+      border: 1px solid rgba(26,35,126,0.15);
+      border-radius: var(--radius);
+      transition: background 0.15s, border-color 0.15s;
+      font-size: 0.95rem;
+    }
+
+    .radio-option:hover, .checkbox-option:hover {
+      background: var(--cream-light);
+      border-color: var(--blue-primary);
+    }
+
+    .radio-option input[type="radio"],
+    .checkbox-option input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue-primary);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    @media (max-width: 600px) {
+      .checkbox-group { grid-template-columns: 1fr; }
+    }
+
+    /* ── Slider de note ── */
+    .slider-wrapper {
+      margin-top: 0.5rem;
+    }
+
+    .slider-wrapper input[type="range"] {
+      width: 100%;
+      accent-color: var(--blue-primary);
+      height: 6px;
+      cursor: pointer;
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--gray-mid);
+      margin-top: 0.4rem;
+    }
+
+    .valeur-note-display {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+      margin: 0.5rem 0;
+    }
+
+    /* ── Bouton de soumission ── */
+    .btn-submit-questionnaire {
+      width: 100%;
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      background: var(--blue-primary);
+      color: var(--lime);
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-ui);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-submit-questionnaire:hover {
+      background: var(--blue-mid);
+      transform: translateY(-2px);
+    }
+
+    /* ── Séparateur de section ── */
+    .form-section-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--blue-primary);
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--lime);
+    }
+
+    /* ── Section récapitulatif (affichée après soumission) ── */
+    #section-recap {
+      display: none;
+      background: var(--white);
+      border: 1px solid rgba(26,35,126,0.1);
+      border-radius: var(--radius-card);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .recap-header {
+      text-align: center;
+      padding: 2rem;
+      background: var(--blue-primary);
+      border-radius: var(--radius-card);
+      margin-bottom: 2rem;
+    }
+
+    .recap-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--lime);
+      margin-bottom: 0.5rem;
+    }
+
+    .recap-header p {
+      color: var(--cream);
+      font-size: 0.95rem;
+    }
+
+    .recap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .recap-grid { grid-template-columns: 1fr; }
+    }
+
+    .recap-item {
+      background: var(--cream-light);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      border-left: 3px solid var(--lime);
+    }
+
+    .recap-item .recap-label {
+      font-family: var(--font-ui);
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      margin-bottom: 0.3rem;
+    }
+
+    .recap-item .recap-valeur {
+      font-size: 0.95rem;
+      color: var(--blue-primary);
+      font-weight: 600;
+    }
+
+    .recap-item.full {
+      grid-column: 1 / -1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ HEADER ════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="NoubaTN — Accueil">
+        <img src="logo.jpg" alt="NoubaTN" class="logo-img" />
+        <span>
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <span class="logo-tagline">Patrimoine Malouf Tunisien</span>
+        </span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-hamburger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="bibliotheque.html">Bibliothèque</a></li>
+          <li><a href="cheikhs.html">Cheikhs</a></li>
+          <li><a href="patrimoine.html">Patrimoine</a></li>
+          <li><a href="evenements.html">Évènements</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <div class="container">
+        <ol class="breadcrumb-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li>Questionnaire</li>
+        </ol>
+      </div>
+    </nav>
+
+    <section class="page-hero" aria-label="En-tête Questionnaire">
+      <div class="container page-hero-inner">
+        <p class="page-hero-label">Votre avis</p>
+        <h1 class="page-hero-title">Questionnaire Malouf</h1>
+        <p class="page-hero-subtitle">
+          Partagez votre expérience et vos connaissances du patrimoine Malouf tunisien.
+          Vos réponses nous aident à améliorer NoubaTN.
+        </p>
+      </div>
+    </section>
+
+    <!-- ════ SECTION QUESTIONNAIRE ════ -->
+    <section class="section" aria-labelledby="questionnaire-title">
+      <div class="container">
+        <div class="questionnaire-layout">
+
+          <!-- ── Panneau latéral ── -->
+          <aside class="side-info">
+            <h3> À propos</h3>
+            <p>Ce questionnaire vise à mieux comprendre votre relation avec le Malouf tunisien et votre expérience sur NoubaTN.</p>
+            <p>Vos réponses sont utilisées uniquement à des fins d'amélioration du site.</p>
+            <h3 style="margin-top:1.5rem;"> Ce formulaire contient</h3>
+            <ul>
+              <li>Champs texte (nom, email)</li>
+              <li>Boutons radio (niveau)</li>
+              <li>Cases à cocher (cheikhs)</li>
+              <li>Liste déroulante (nouba)</li>
+              <li>Curseur de note</li>
+              <li>Zone de texte (commentaire)</li>
+            </ul>
+            <div style="margin-top:1.5rem; padding:1rem; background:rgba(224,164,88,0.1); border:1px solid rgba(224,164,88,0.3); border-radius:var(--radius);">
+              <p style="color:var(--lime); font-family:var(--font-ui); font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase;">Validation JS</p>
+              <p style="font-size:0.85rem; margin-top:0.4rem;">Nom · Email · Cheikhs cochés</p>
+            </div>
+          </aside>
+
+          <!-- ── Contenu principal : formulaire + récapitulatif ── -->
+          <div>
+
+            <!-- ══ FORMULAIRE (masqué après soumission) ══ -->
+            <div id="section-formulaire">
+              <div class="questionnaire-card">
+
+                <h2 style="font-family:var(--font-display);font-size:1.5rem;color:var(--blue-primary);margin-bottom:0.25rem;">
+                  Votre avis sur le Malouf
+                </h2>
+                <p style="font-size:0.88rem;color:#777;margin-bottom:1.5rem;">
+                  Les champs marqués d'un <strong>*</strong> sont obligatoires.
+                </p>
+
+                <form action="traitement_questionnaire.php" method="post" novalidate>
+
+                  <!-- ── Section 1 : Identité ── -->
+                  <h3 class="form-section-title">1. Votre identité</h3>
+
+                  <!-- Champ 1 : Nom (textbox) — VALIDÉ par JS -->
+                  <div class="form-group">
+                    <label class="label-main" for="q-nom">Nom complet *</label>
+                    <input type="text" id="q-nom" name="nom" placeholder="Votre prénom et nom" autocomplete="name" />
+                    <div class="msg-erreur" id="err-nom" role="alert"></div>
+                  </div>
+
+                  <!-- Champ 2 : Email (email) — VALIDÉ par JS -->
+                  <div class="form-group">
+                    <label class="label-main" for="q-email">Adresse e-mail *</label>
+                    <input type="email" id="q-email" name="email" placeholder="votre@email.com" autocomplete="email" />
+                    <div class="msg-erreur" id="err-email" role="alert"></div>
+                  </div>
+
+                  <!-- ── Section 2 : Connaissances ── -->
+                  <h3 class="form-section-title">2. Votre rapport au Malouf</h3>
+
+                  <!-- Champ 3 : Niveau (radio) — VALIDÉ par JS -->
+                  <div class="form-group">
+                    <label class="label-main">Niveau de connaissance du Malouf *</label>
+                    <div class="radio-group" role="group" aria-labelledby="label-niveau">
+                      <label class="radio-option">
+                        <input type="radio" name="niveau" value="Débutant" />
+                         Débutant — je découvre le Malouf
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="niveau" value="Amateur" />
+                         Amateur — j'aime écouter le Malouf
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="niveau" value="Passionné" />
+                         Passionné — je connais bien le répertoire
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="niveau" value="Expert" />
+                         Expert — musicien ou chercheur
+                      </label>
+                    </div>
+                    <div class="msg-erreur" id="err-niveau" role="alert"></div>
+                  </div>
+
+                  <!-- Champ 4 : Cheikhs préférés (checkboxes) — VALIDÉ par JS -->
+                  <div class="form-group">
+                    <label class="label-main">Vos Cheikhs préférés * (au moins 1)</label>
+                    <div class="checkbox-group" role="group">
+                      <label class="checkbox-option">
+                        <input type="checkbox" name="cheikh" value="Khemaïs Tarnane" />
+                        Khemaïs Tarnane
+                      </label>
+                      <label class="checkbox-option">
+                        <input type="checkbox" name="cheikh" value="Ali Sriti" />
+                        Ali Sriti
+                      </label>
+                      <label class="checkbox-option">
+                        <input type="checkbox" name="cheikh" value="Salah El Mahdi" />
+                        Salah El Mahdi
+                      </label>
+                      <label class="checkbox-option">
+                        <input type="checkbox" name="cheikh" value="Zied Gharsa" />
+                        Zied Gharsa
+                      </label>
+                      <label class="checkbox-option">
+                        <input type="checkbox" name="cheikh" value="Lotfi Bouchnak" />
+                        Lotfi Bouchnak
+                      </label>
+                      <label class="checkbox-option">
+                        <input type="checkbox" name="cheikh" value="Hédi Jouini" />
+                        Hédi Jouini
+                      </label>
+                    </div>
+                    <div class="msg-erreur" id="err-cheikhs" role="alert"></div>
+                  </div>
+
+                  <!-- Champ 5 : Nouba préférée (select) -->
+                  <div class="form-group">
+                    <label class="label-main" for="q-nouba">Nouba préférée</label>
+                    <select id="q-nouba" name="nouba">
+                      <option value="">— Choisissez une Nouba —</option>
+                      <option value="Nouba Asbayïne">Noubat el-Dhil </option>
+                      <option value="Nouba Istihlal">Noubat el-'Asbain</option>
+                      <option value="Nouba Raml el Maya">Nouba  el-Hsin</option>
+                      <option value="Nouba Raml">Noubat el-iraq</option>
+                      <option value="Nouba Sika">Noubat el-Nawat</option>
+                      <option value="Nouba Iraqi">Noubat el-rmal</option>
+                      <option value="Nouba Rasd">Noubat el-mazmoum</option>
+                      <option value="Nouba Rasd el Dil">Noubat el-maya</option>
+                      <option value="Nouba Isbahan">Noubat el-Sika</option>
+                      <option value="Nouba Maya">Noubat raml al-maya </option>
+                      <option value="Nouba Zidane">Noubat el-isbahân</option>
+                      <option value="Nouba Hijaz">Noubat rast al-dhil</option>
+                      <option value="Nouba Hijaz Msharqi">Noubat el-Rast</option>
+                    </select>
+                  </div>
+
+                  <!-- ── Section 3 : Évaluation ── -->
+                  <h3 class="form-section-title">3. Évaluation du site</h3>
+
+                  <!-- Champ 6 : Note (range / slider) -->
+                  <div class="form-group">
+                    <label class="label-main" for="q-note">Note globale du site NoubaTN</label>
+                    <div class="slider-wrapper">
+                      <!-- La valeur affichée est mise à jour par js/questionnaire.js -->
+                      <div class="valeur-note-display" id="valeur-note">5 / 10</div>
+                      <input type="range" id="q-note" name="note" min="1" max="10" value="5" />
+                      <div class="slider-labels">
+                        <span>1 — Insuffisant</span>
+                        <span>10 — Excellent</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Champ 7 : Commentaire (textarea) — VALIDÉ par JS -->
+                  <div class="form-group">
+                    <label class="label-main" for="q-commentaire">Commentaire libre *</label>
+                    <textarea
+                      id="q-commentaire"
+                      name="commentaire"
+                      placeholder="Partagez vos impressions, suggestions ou remarques sur NoubaTN et le Malouf…"
+                    ></textarea>
+                    <div class="msg-erreur" id="err-commentaire" role="alert"></div>
+                  </div>
+
+                  <!-- Bouton de soumission -->
+                  <button type="submit" class="btn-submit-questionnaire">
+                    Envoyer mes réponses →
+                  </button>
+
+                </form>
+              </div>
+            </div>
+            <!-- /section-formulaire -->
+
+            <!-- ══ RÉCAPITULATIF (affiché après soumission valide) ══ -->
+            <div id="section-recap">
+              <div class="recap-header">
+                <h2> Merci pour votre participation !</h2>
+                <p>Voici le récapitulatif de vos réponses.</p>
+              </div>
+
+              <div class="recap-grid">
+                <div class="recap-item">
+                  <p class="recap-label">Nom</p>
+                  <p class="recap-valeur" id="recap-nom">—</p>
+                </div>
+                <div class="recap-item">
+                  <p class="recap-label">Email</p>
+                  <p class="recap-valeur" id="recap-email">—</p>
+                </div>
+                <div class="recap-item">
+                  <p class="recap-label">Niveau de connaissance</p>
+                  <p class="recap-valeur" id="recap-niveau">—</p>
+                </div>
+                <div class="recap-item">
+                  <p class="recap-label">Note du site</p>
+                  <p class="recap-valeur" id="recap-note">—</p>
+                </div>
+                <div class="recap-item">
+                  <p class="recap-label">Nouba préférée</p>
+                  <p class="recap-valeur" id="recap-nouba">—</p>
+                </div>
+                <div class="recap-item full">
+                  <p class="recap-label">Cheikhs préférés</p>
+                  <p class="recap-valeur" id="recap-cheikhs">—</p>
+                </div>
+                <div class="recap-item full">
+                  <p class="recap-label">Commentaire</p>
+                  <p class="recap-valeur" id="recap-comment" style="font-weight:400;font-style:italic;">—</p>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <!-- Bouton pour modifier les réponses — géré par js/questionnaire.js -->
+                <button id="btn-modifier" class="btn btn-outline">← Modifier mes réponses</button>
+                <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
+              </div>
+            </div>
+            <!-- /section-recap -->
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <p class="footer-tagline">La plateforme numérique dédiée à la préservation du patrimoine Malouf tunisien.</p>
+          <span class="footer-ensi">Projet ENSI · La Manouba</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="cheikhs.html">Cheikhs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="funpage.html">Fun Page</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Informations</h4>
+          <ul>
+            <li><a href="apropos.html">Le projet</a></li>
+            <li><a href="contact.html">Nous écrire</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 NoubaTN — Tous droits réservés</p>
+        <p class="footer-note">École Nationale des Sciences de l'Informatique · ENSI, La Manouba</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script de validation du formulaire -->
+  <script src="questionnaire.js"></script>
+
+</body>
+</html>

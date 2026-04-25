@@ -1,0 +1,195 @@
+// Auteurs : May Hamrouni & Firas Jebiniani
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Évènements culturels autour du Malouf tunisien — tableau dynamique JavaScript." />
+  <title>Évènements — NoubaTN</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; background:var(--cream-light); border:1px solid rgba(26,35,126,0.1); border-radius:var(--radius-card); padding:1.25rem 1.5rem; }
+    .toolbar-search { display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; flex:1; }
+    .toolbar-search input, .toolbar-search select { padding:0.6rem 1rem; border:1px solid rgba(26,35,126,0.2); border-radius:var(--radius); font-family:var(--font-body); font-size:0.95rem; outline:none; transition:border-color 0.2s; background:white; }
+    .toolbar-search input:focus, .toolbar-search select:focus { border-color:var(--blue-primary); }
+    .toolbar-search input { min-width:220px; }
+    .compteur { font-family:var(--font-ui); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-mid); white-space:nowrap; }
+    .tableau-wrapper { overflow-x:auto; border-radius:var(--radius-card); border:1px solid rgba(26,35,126,0.1); box-shadow:var(--shadow); margin-bottom:2rem; }
+    #tableau-evenements { width:100%; border-collapse:collapse; font-size:0.93rem; }
+    #tableau-evenements thead { background:var(--blue-primary); }
+    #tableau-evenements thead th { padding:1rem 1.25rem; text-align:left; font-family:var(--font-ui); font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--lime); white-space:nowrap; }
+    #tableau-evenements tbody tr { border-bottom:1px solid rgba(26,35,126,0.07); transition:background 0.2s; }
+    #tableau-evenements tbody tr:hover { background:var(--cream-light); }
+    #tableau-evenements tbody tr:last-child { border-bottom:none; }
+    #tableau-evenements tbody td { padding:0.9rem 1.25rem; vertical-align:top; color:var(--text-body); }
+    .evt-desc { font-size:0.88rem; color:#666; line-height:1.5; }
+    .badge-statut { display:inline-block; padding:0.2rem 0.7rem; border-radius:100px; font-family:var(--font-ui); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; }
+    .badge-statut.a-venir { background:rgba(39,174,96,0.12); color:#27ae60; border:1px solid rgba(39,174,96,0.3); }
+    .badge-statut.passe   { background:rgba(127,140,141,0.15); color:#7f8c8d; border:1px solid rgba(127,140,141,0.3); }
+    .badge-type { display:inline-block; padding:0.2rem 0.65rem; border-radius:100px; font-family:var(--font-ui); font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; }
+    .badge-type-concert    { background:rgba(52,152,219,0.12);  color:#2980b9; border:1px solid rgba(52,152,219,0.3); }
+    .badge-type-festival   { background:rgba(155,89,182,0.12);  color:#8e44ad; border:1px solid rgba(155,89,182,0.3); }
+    .badge-type-conf-rence { background:rgba(230,126,34,0.12);  color:#d35400; border:1px solid rgba(230,126,34,0.3); }
+    .badge-type-atelier    { background:rgba(26,188,156,0.12);  color:#16a085; border:1px solid rgba(26,188,156,0.3); }
+    .badge-type-exposition { background:rgba(241,196,15,0.15);  color:#d4a017; border:1px solid rgba(241,196,15,0.35); }
+    .badge-type-gala       { background:rgba(224,164,88,0.15);  color:#b07d30; border:1px solid rgba(224,164,88,0.35); }
+    .btn-supprimer { background:rgba(192,57,43,0.08); color:#c0392b; border:1px solid rgba(192,57,43,0.25); border-radius:var(--radius); padding:0.3rem 0.7rem; font-family:var(--font-ui); font-size:0.75rem; cursor:pointer; transition:background 0.2s, transform 0.15s; white-space:nowrap; }
+    .btn-supprimer:hover { background:#c0392b; color:#fff; transform:scale(1.05); }
+    .section-formulaires { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem; }
+    @media (max-width:900px) { .section-formulaires { grid-template-columns:1fr; } }
+    .form-card { background:var(--white); border:1px solid rgba(26,35,126,0.1); border-radius:var(--radius-card); padding:2rem; box-shadow:var(--shadow); }
+    .form-card h3 { font-family:var(--font-display); font-size:1.3rem; color:var(--blue-primary); margin-bottom:0.4rem; }
+    .form-card p.form-desc { font-size:0.88rem; color:#777; margin-bottom:1.5rem; }
+    .form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-group { margin-bottom:1rem; }
+    .form-group label { display:block; font-family:var(--font-ui); font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--blue-primary); margin-bottom:0.4rem; }
+    .form-group input, .form-group select, .form-group textarea { width:100%; padding:0.7rem 0.9rem; border:1px solid rgba(26,35,126,0.2); border-radius:var(--radius); font-family:var(--font-body); font-size:0.95rem; color:var(--text-body); background:white; outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--blue-primary); box-shadow:0 0 0 3px rgba(26,35,126,0.08); }
+    .form-group textarea { resize:vertical; min-height:80px; }
+    .form-message { padding:0.7rem 1rem; border-radius:var(--radius); font-size:0.88rem; margin-top:0.75rem; display:none; }
+    .form-message.succes { background:rgba(39,174,96,0.1); color:#27ae60; border:1px solid rgba(39,174,96,0.3); }
+    .form-message.erreur { background:rgba(192,57,43,0.08); color:#c0392b; border:1px solid rgba(192,57,43,0.25); }
+  </style>
+</head>
+<body>
+ 
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="NoubaTN — Accueil">
+        <img src="logo.jpg" alt="NoubaTN" class="logo-img" />
+        <span>
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <span class="logo-tagline">Patrimoine Malouf Tunisien</span>
+        </span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-hamburger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="bibliotheque.html">Bibliothèque</a></li>
+          <li><a href="cheikhs.html">Cheikhs</a></li>
+          <li><a href="patrimoine.html">Patrimoine</a></li>
+          <li><a href="evenements.html" class="active">Évènements</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+ 
+  <main>
+ 
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <div class="container">
+        <ol class="breadcrumb-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li>Évènements</li>
+        </ol>
+      </div>
+    </nav>
+ 
+    <section class="page-hero" aria-label="En-tête Évènements">
+      <div class="container page-hero-inner">
+        <p class="page-hero-label">Agenda culturel</p>
+        <h1 class="page-hero-title">Évènements & Festivals</h1>
+        <p class="page-hero-subtitle">Tableau dynamique généré par JavaScript — recherche, ajout et suppression interactifs.</p>
+      </div>
+    </section>
+ 
+    <section class="section" aria-labelledby="tableau-title">
+      <div class="container">
+ 
+        <header class="section-header">
+          <span class="section-label">Données dynamiques</span>
+          <h2 class="section-title" id="tableau-title">Tableau des Évènements</h2>
+          <p class="section-subtitle">Généré dynamiquement par JavaScript. Recherchez, ajoutez ou supprimez un évènement via les formulaires.</p>
+        </header>
+        <div style="display:flex; gap:1rem; margin-bottom:2rem;">
+          <a href="search_evenements.php" style="padding:0.6rem 1.2rem; background:#2c3e50; color:#fff; border-radius:6px; text-decoration:none;">🔍 Rechercher un événement</a>
+          <a href="insert_evenement.php" style="padding:0.6rem 1.2rem; background:#27ae60; color:#fff; border-radius:6px; text-decoration:none;">➕ Ajouter un événement</a>
+        </div>
+        
+        
+        <div class="tableau-wrapper">
+          <table id="tableau-evenements" aria-label="Tableau des évènements du Malouf">
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Titre</th>
+                <th>Date</th>
+                <th>Lieu</th>
+                <th>Ville</th>
+                <th>Type</th>
+                <th>Statut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-evenements">
+              <!-- Contenu généré par JavaScript (evenements.js) -->
+            </tbody>
+          </table>
+        </div>
+ 
+      </div>
+    </section>
+ 
+    <section class="cta-banner" aria-label="Appel à l'action">
+      <div class="container">
+        <h2>Proposer un évènement</h2>
+        <p>Vous organisez un concert, un festival ou une conférence sur le Malouf ? Ajoutez-le directement via le formulaire ci-dessus.</p>
+        <a href="contact.html" class="btn btn-primary">Nous contacter</a>
+      </div>
+    </section>
+ 
+  </main>
+ 
+  <footer class="site-footer" aria-label="Pied de page">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <p class="footer-tagline">La plateforme numérique dédiée à la préservation et à la promotion du patrimoine Malouf tunisien.</p>
+          <span class="footer-ensi">Projet ENSI · La Manouba</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="bibliotheque.html">Bibliothèque</a></li>
+            <li><a href="cheikhs.html">Cheikhs</a></li>
+            <li><a href="patrimoine.html">Patrimoine</a></li>
+            <li><a href="evenements.html">Évènements</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Agenda</h4>
+          <ul>
+            <li><a href="evenements.html">Concerts</a></li>
+            <li><a href="evenements.html">Festivals</a></li>
+            <li><a href="evenements.html">Conférences</a></li>
+            <li><a href="evenements.html">Ateliers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Informations</h4>
+          <ul>
+            <li><a href="apropos.html">Le projet</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 NoubaTN — Tous droits réservés</p>
+        <p class="footer-note">École Nationale des Sciences de l'Informatique · ENSI, La Manouba, Tunisie</p>
+      </div>
+    </div>
+  </footer>
+ 
+  <script src="evenements.js"></script>
+</body>
+</html>

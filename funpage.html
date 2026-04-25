@@ -1,0 +1,542 @@
+// Auteurs : May Hamrouni & Firas Jebiniani
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fun Page NoubaTN — Quiz interactif sur le Malouf tunisien." />
+  <title>Quiz Malouf — NoubaTN</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ============================================================
+       STYLES SPÉCIFIQUES — funpage.html
+       ============================================================ -->
+  <style>
+    /* ── Mise en page générale ── */
+    .funpage-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .funpage-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ════════════════════════════════
+       ZONE DE QUIZ
+    ════════════════════════════════ */
+    .quiz-wrapper {
+      background: var(--white);
+      border: 1px solid rgba(26,35,126,0.1);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    /* ── En-tête du quiz ── */
+    .quiz-header {
+      background: var(--blue-primary);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    #titre-quiz {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--white);
+      transition: color 0.2s;
+      cursor: default;
+    }
+
+    .score-badge {
+      background: rgba(224,164,88,0.2);
+      border: 1px solid var(--lime);
+      border-radius: 100px;
+      padding: 0.3rem 1rem;
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--lime);
+    }
+
+    /* ── Barre de progression ── */
+    .barre-prog-outer {
+      height: 5px;
+      background: rgba(26,35,126,0.1);
+    }
+
+    .barre-prog-inner {
+      height: 100%;
+      background: var(--lime);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    /* ── Corps du quiz ── */
+    .quiz-body {
+      padding: 2rem;
+    }
+
+    .numero-question {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      margin-bottom: 0.75rem;
+    }
+
+    .texte-question {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--blue-primary);
+      line-height: 1.4;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ── Grille des boutons réponse ── */
+    #conteneur-choix {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 500px) {
+      #conteneur-choix { grid-template-columns: 1fr; }
+    }
+
+    .btn-reponse {
+      padding: 0.85rem 1rem;
+      border: 2px solid rgba(26,35,126,0.15);
+      border-radius: var(--radius);
+      background: var(--white);
+      color: var(--text-body);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      line-height: 1.4;
+    }
+
+    .btn-reponse:hover:not(:disabled) {
+      background: var(--cream-light);
+      border-color: var(--blue-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-reponse:disabled { cursor: default; }
+
+    /* État après réponse */
+    .btn-reponse.correct {
+      background: rgba(39,174,96,0.1);
+      border-color: #27ae60;
+      color: #27ae60;
+      font-weight: 700;
+    }
+
+    .btn-reponse.incorrect {
+      background: rgba(192,57,43,0.08);
+      border-color: #c0392b;
+      color: #c0392b;
+    }
+
+    /* ── Feedback (bonne/mauvaise réponse) ── */
+    .feedback-quiz {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .feedback-quiz.correct {
+      background: rgba(39,174,96,0.1);
+      border: 1px solid rgba(39,174,96,0.3);
+      color: #27ae60;
+    }
+
+    .feedback-quiz.incorrect {
+      background: rgba(192,57,43,0.08);
+      border: 1px solid rgba(192,57,43,0.25);
+      color: #c0392b;
+    }
+
+    .feedback-quiz.avertissement {
+      background: rgba(243,156,18,0.1);
+      border: 1px solid rgba(243,156,18,0.3);
+      color: #f39c12;
+    }
+
+    .feedback-icone {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Explication ── */
+    #explication-quiz {
+      display: none;
+      padding: 0.85rem 1.25rem;
+      background: var(--cream-light);
+      border-left: 3px solid var(--blue-primary);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Bouton suivant ── */
+    #btn-suivant {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--blue-primary);
+      color: var(--lime);
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    #btn-suivant:hover { background: var(--blue-mid); transform: translateY(-1px); }
+
+    /* ── Zone de résultats finaux ── */
+    #zone-resultats {
+      display: none;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .score-final-display {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+      line-height: 1;
+    }
+
+    .pct-final-display {
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: var(--lime);
+      background: var(--blue-primary);
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      margin: 0.75rem 0 1.5rem;
+    }
+
+    .message-final {
+      font-size: 1.1rem;
+      color: var(--text-body);
+      margin-bottom: 1.5rem;
+      font-family: var(--font-display);
+      font-style: italic;
+    }
+
+    /* ════════════════════════════════
+       PANNEAU LATÉRAL
+    ════════════════════════════════ */
+    .side-panel { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .panel-card {
+      background: var(--white);
+      border: 1px solid rgba(26,35,126,0.1);
+      border-radius: var(--radius-card);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .panel-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--blue-primary);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--lime);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ HEADER ════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="NoubaTN — Accueil">
+        <img src="logo.jpg" alt="NoubaTN" class="logo-img" />
+        <span>
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <span class="logo-tagline">Patrimoine Malouf Tunisien</span>
+        </span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-hamburger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="bibliotheque.html">Bibliothèque</a></li>
+          <li><a href="cheikhs.html">Cheikhs</a></li>
+          <li><a href="patrimoine.html">Patrimoine</a></li>
+          <li><a href="evenements.html">Évènements</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+              <!-- ════ DÉMONSTRATION PROPAGATION DES ÉVÉNEMENTS ════ -->
+  <section class="section" style="background: var(--cream-light);">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-label">JavaScript</span>
+        <h2 class="section-title">Propagation des Événements</h2>
+      </header>
+      <p style="color:#555; margin-bottom: 1.5rem;">
+        Cliquez sur les boutons et observez comment l'événement se propage dans le DOM.
+      </p>
+
+    <!-- 3 niveaux imbriqués -->
+    <div id="demo-outer" style="
+      background: rgba(224,164,88,0.15);
+      border: 2px solid var(--lime);
+      border-radius: 12px;
+      padding: 2rem;
+      cursor: pointer;
+      ">
+      <p style="font-weight:bold; color: var(--blue-primary); margin-bottom: 1rem;">
+        DIV EXTÉRIEUR — Niveau 3
+      </p>
+
+      <div id="demo-milieu" style="
+        background: rgba(52,152,219,0.15);
+        border: 2px solid #3498db;
+        border-radius: 8px;
+        padding: 1.5rem;
+        cursor: pointer;
+      ">
+        <p style="font-weight:bold; color: #3498db; margin-bottom: 1rem;">
+          DIV INTERMÉDIAIRE — Niveau 2
+        </p>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button id="demo-inner-sans" class="btn btn-primary">
+            Cliquer SANS stopPropagation
+          </button>
+          <button id="demo-inner-avec" class="btn" style="background:#e74c3c; color:#fff;">
+            Cliquer AVEC stopPropagation
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Journal des événements -->
+    <div style="margin-top: 1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+        <p style="font-weight:bold; color: var(--blue-primary);">Journal des événements :</p>
+        <button id="btn-effacer-journal" class="btn" style="font-size:0.75rem; padding:0.4rem 1rem;">
+          Effacer
+        </button>
+      </div>
+      <div id="journal-propagation" style="
+        background: #1a1a2e;
+        color: #eee;
+        border-radius: 8px;
+        padding: 1rem;
+        min-height: 120px;
+        max-height: 220px;
+        overflow-y: auto;
+        font-family: monospace;
+        font-size: 0.85rem;
+      "></div>
+    </div>
+
+    </div>
+  </section>
+  <main>
+
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <div class="container">
+        <ol class="breadcrumb-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li>Fun Page — Quiz</li>
+        </ol>
+      </div>
+    </nav>
+
+    <section class="page-hero" aria-label="En-tête Fun Page">
+      <div class="container page-hero-inner">
+        <p class="page-hero-label">Interactif</p>
+        <h1 class="page-hero-title">Quiz — Connais-tu le Malouf ? </h1>
+        <p class="page-hero-subtitle">
+          10 questions sur les Cheikhs, les Noubas et les instruments. Teste tes connaissances !
+        </p>
+      </div>
+    </section>
+
+    <!-- ════ QUIZ + PANNEAU LATÉRAL ════ -->
+    <section class="section" aria-labelledby="quiz-title">
+      <div class="container">
+        <div class="funpage-layout">
+
+          <!-- ── Zone principale : Quiz ── -->
+          <div>
+
+            <!-- ════ QUIZ ════ -->
+            <div class="quiz-wrapper" id="quiz-wrapper">
+
+              <!-- En-tête du quiz -->
+              <div class="quiz-header">
+                <h2 id="titre-quiz">Quiz Malouf Tunisien</h2>
+                <span class="score-badge">Score : <span id="score-actuel">0</span> / 10</span>
+              </div>
+
+              <!-- Barre de progression -->
+              <div class="barre-prog-outer" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div class="barre-prog-inner" id="barre-progression"></div>
+              </div>
+
+              <!-- Corps du quiz — zone-quiz affichée pendant le quiz -->
+              <div id="zone-quiz" class="quiz-body">
+                <p class="numero-question" id="numero-question">1 / 10</p>
+                <p class="texte-question" id="texte-question">Chargement…</p>
+
+                <!-- Boutons de choix générés par js/funpage.js -->
+                <div id="conteneur-choix" role="group" aria-label="Choix de réponse"></div>
+
+                <!-- Feedback après réponse -->
+                <div id="feedback-quiz" class="feedback-quiz" role="alert">
+                  <span class="feedback-icone" id="feedback-icone"></span>
+                  <span id="feedback-texte"></span>
+                </div>
+
+                <!-- Explication de la bonne réponse -->
+                <p id="explication-quiz"></p>
+
+                <!-- Bouton pour passer à la question suivante -->
+                <button id="btn-suivant">Question suivante →</button>
+              </div>
+
+              <!-- Zone de résultats (masquée jusqu'à la fin) -->
+              <div id="zone-resultats">
+                <div class="score-final-display" id="score-final">0 / 10</div>
+                <div class="pct-final-display" id="pct-final">0%</div>
+                <p class="message-final" id="message-final"></p>
+                <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+                  <button id="btn-restart" class="btn btn-primary"> Recommencer le quiz</button>
+                  <a href="cheikhs.html" class="btn btn-outline">Découvrir les Cheikhs</a>
+                </div>
+              </div>
+
+            </div>
+            <!-- /quiz-wrapper -->
+
+          </div>
+          <!-- /colonne principale -->
+
+          <!-- ── Panneau latéral ── -->
+          <aside class="side-panel">
+
+            <div class="panel-card">
+              <h3> Règles du quiz</h3>
+              <ul style="list-style:none; font-size:0.9rem; color:#555; line-height:2;">
+                <li> 10 questions sur le Malouf</li>
+                <li> 1 seule bonne réponse par question</li>
+                <li> Explication après chaque réponse</li>
+                <li> Score affiché en temps réel</li>
+                <li> Recommençable à l'infini</li>
+              </ul>
+            </div>
+
+            <div class="panel-card">
+              <h3> Thèmes abordés</h3>
+              <ul style="list-style:none; font-size:0.88rem; color:#555; line-height:1.9;">
+                <li> Histoire du Malouf</li>
+                <li> Les grands Cheikhs</li>
+                <li> Les 13 Noubas</li>
+                <li> Les instruments</li>
+                <li> Les institutions</li>
+              </ul>
+            </div>
+
+            <div class="panel-card" style="background:var(--blue-primary); color:var(--white);">
+              <h3 style="color:var(--lime);"> Aller plus loin</h3>
+              <p style="font-size:0.88rem; color:var(--cream); line-height:1.7; margin-bottom:1rem;">
+                Envie d'approfondir ? Explore les sections du site !
+              </p>
+              <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                <a href="cheikhs.html" class="btn btn-primary" style="text-align:center;">Les Cheikhs</a>
+                <a href="bibliotheque.html" class="btn" style="background:rgba(255,255,255,0.1); color:var(--cream); text-align:center; border:1px solid rgba(255,255,255,0.2);">La Bibliothèque</a>
+              </div>
+            </div>
+
+          </aside>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <p class="footer-tagline">La plateforme numérique dédiée à la préservation du patrimoine Malouf tunisien.</p>
+          <span class="footer-ensi">Projet ENSI · La Manouba</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="cheikhs.html">Cheikhs</a></li>
+            <li><a href="bibliotheque.html">Bibliothèque</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Pages Part 3</h4>
+          <ul>
+            <li><a href="questionnaire.html">Questionnaire</a></li>
+            <li><a href="funpage.html">Fun Page — Quiz</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Informations</h4>
+          <ul>
+            <li><a href="apropos.html">Le projet</a></li>
+            <li><a href="contact.html">Nous écrire</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 NoubaTN — Tous droits réservés</p>
+        <p class="footer-note">École Nationale des Sciences de l'Informatique · ENSI, La Manouba, Tunisie</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script JS du quiz et de la propagation -->
+  <script src="funpage.js"></script>
+
+</body>
+</html>

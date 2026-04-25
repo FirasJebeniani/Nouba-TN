@@ -1,0 +1,333 @@
+// Auteurs : May Hamrouni & Firas Jebiniani
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bibliothèque des 13 Noubas du Malouf tunisien — modes, structures et textes poétiques." />
+  <title>Bibliothèque — NoubaTN</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .nouba-card { display: flex; flex-direction: column; }
+    .nouba-card .nouba-link {
+      margin-top: auto;
+      padding-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-ui, 'Courier New', monospace);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--lime, #E0A458);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .nouba-card .nouba-link:hover { gap: 0.7rem; }
+    a.nouba-card-wrap { text-decoration: none; color: inherit; display: block; }
+    a.nouba-card-wrap .nouba-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(26,35,126,0.22); }
+    a.nouba-card-wrap .nouba-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--lime); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+    a.nouba-card-wrap:hover .nouba-card::before { transform: scaleX(1); }
+  </style>
+</head>
+<body>
+
+  <!-- ════ HEADER ════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="NoubaTN — Accueil">
+        <img src="logo.jpg" alt="NoubaTN" class="logo-img" />
+        <span>
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <span class="logo-tagline">Patrimoine Malouf Tunisien</span>
+        </span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-hamburger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="bibliotheque.html" class="active">Bibliothèque</a></li>
+          <li><a href="cheikhs.html">Cheikhs</a></li>
+          <li><a href="patrimoine.html">Patrimoine</a></li>
+          <li><a href="evenements.html">Évènements</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ════ BREADCRUMB ════ -->
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <div class="container">
+        <ol class="breadcrumb-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li>Bibliothèque</li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- ════ PAGE HERO ════ -->
+    <section class="page-hero" aria-label="En-tête de la bibliothèque">
+      <div class="container page-hero-inner">
+        <p class="page-hero-label">Collection</p>
+        <h1 class="page-hero-title">Bibliothèque des Noubas</h1>
+        <p class="page-hero-subtitle">
+          Les 13 Noubas du Malouf tunisien constituent un corpus musical d'une
+          richesse exceptionnelle. Chaque Nouba est organisée en sept mouvements
+          (msaddar, abyat (vers), btâyhi (allongé), barwal (poème), darj (étape), khafif (léger), khatm (final)) et possède son mode modal distinct.
+        </p>
+      </div>
+    </section>
+
+    
+
+    <!-- ════ LES 13 NOUBAS ════ -->
+    <section class="section" aria-labelledby="noubas-title">
+      <div class="container">
+
+        <header class="section-header">
+          <span class="section-label">Répertoire complet</span>
+          <h2 class="section-title" id="noubas-title">Les 13 Noubas</h2>
+          <p class="section-subtitle">Cliquez sur une carte pour découvrir la description complète de chaque Nouba.</p>
+        </header>
+
+        <div class="nouba-grid">
+
+                    <!-- Nouba 1 -->
+          <a href="nouba1.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">01</span>
+              <span class="nouba-mode">Mode : Raml El Maya</span>
+              <h3 class="nouba-name">Noubat el-Dhil</h3>
+              <p class="nouba-name-ar">نوبة الذيل</p>
+              <p class="nouba-parts">7 mouvements · Tonalité grave et solennelle</p>
+              <p class="nouba-excerpt">L'une des Noubas les plus solennelles du répertoire, ouvrant souvent les grandes cérémonies musicales par sa gravité et sa profondeur.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 2 -->
+          <a href="nouba2.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">02</span>
+              <span class="nouba-mode">Mode : Isba'ain</span>
+              <h3 class="nouba-name">Noubat el-'Asbain</h3>
+              <p class="nouba-name-ar">نوبة الاصبعين</p>
+              <p class="nouba-parts">7 mouvements · Mode vif et expressif</p>
+              <p class="nouba-excerpt">Caractérisée par un mode expressif et dynamique, cette Nouba évoque les émotions intenses à travers ses textes poétiques andalous.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 3 -->
+          <a href="nouba3.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">03</span>
+              <span class="nouba-mode">Mode : Hsin</span>
+              <h3 class="nouba-name">Noubat el-Hsin</h3>
+              <p class="nouba-name-ar">نوبة الحسين</p>
+              <p class="nouba-parts">7 mouvements · Mode doux et mélancolique</p>
+              <p class="nouba-excerpt">Le mode Hsin confère à cette Nouba une atmosphère de contemplation et de nostalgie, caractéristique du Malouf classique.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 4 -->
+          <a href="nouba4.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">04</span>
+              <span class="nouba-mode">Mode : Rast</span>
+              <h3 class="nouba-name">Noubat el-iraq</h3>
+              <p class="nouba-name-ar">نوبة العراق</p>
+              <p class="nouba-parts">5 mouvements · Mode équilibré et serein</p>
+              <p class="nouba-excerpt">Le iraq, mode fondateur de la musique arabe, donne à cette Nouba un caractère équilibré et universel, apprécié pour sa clarté tonale.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 5 -->
+          <a href="nouba5.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">05</span>
+              <span class="nouba-mode">Mode : Nawat</span>
+              <h3 class="nouba-name">Noubat el-Nawa</h3>
+              <p class="nouba-name-ar">نوبة النوى</p>
+              <p class="nouba-parts">7 mouvements · Mode printanier et léger</p>
+              <p class="nouba-excerpt">La Nouba du Nawa déploie une atmosphère lumineuse et aérienne, souvent associée aux fêtes printanières de la tradition tunisienne.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 6 -->
+          <a href="nouba6.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">06</span>
+              <span class="nouba-mode">Mode : rmal</span>
+              <h3 class="nouba-name">Noubat el-rmal</h3>
+              <p class="nouba-name-ar">نوبة الرمل</p>
+              <p class="nouba-parts">5 mouvements · Mode de l'amour</p>
+              <p class="nouba-excerpt">Le mode el rmal porte cette Nouba vers les textes poétiques les plus ardents, dédiés à la passion et à la dévotion.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 7 -->
+          <a href="nouba7.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">07</span>
+              <span class="nouba-mode">Mode : el-mazmoum</span>
+              <h3 class="nouba-name">Noubat el-mazmoum</h3>
+              <p class="nouba-name-ar">نوبة المزموم</p>
+              <p class="nouba-parts">7 mouvements · Mode intense et profond</p>
+              <p class="nouba-excerpt">Le mazmoum, l'un des modes les plus répandus en musique tunisienne, offre à cette Nouba une couleur émotionnelle intense et très reconnaissable.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 8 -->
+          <a href="nouba8.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">08</span>
+              <span class="nouba-mode">Mode : Maya</span>
+              <h3 class="nouba-name">Noubat el-maya</h3>
+              <p class="nouba-name-ar">نوبة الماية</p>
+              <p class="nouba-parts">7 mouvements · Mode orientalisant et dramatique</p>
+              <p class="nouba-excerpt">Le mode Hijaz, avec ses intervalles caractéristiques, donne à cette Nouba un caractère dramatique et presque mystique, très apprécié des virtuoses.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 9 -->
+          <a href="nouba9.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">09</span>
+              <span class="nouba-mode">Mode : Sika</span>
+              <h3 class="nouba-name">Noubat el-Sika</h3>
+              <p class="nouba-name-ar">نوبة السيكاه</p>
+              <p class="nouba-parts">7 mouvements · Mode pensif et intérieur</p>
+              <p class="nouba-excerpt">La Sika est connue pour son caractère introspectif et contemplatif. Elle est l'une des Noubas les plus interprétées lors des cérémonies soufies.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 10 -->
+          <a href="nouba10.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">10</span>
+              <span class="nouba-mode">Mode : Jaharka</span>
+              <h3 class="nouba-name">Noubat raml al-maya </h3>
+              <p class="nouba-name-ar">نوبة رمل الماية</p>
+              <p class="nouba-parts">5 mouvements · Mode ample et majestueux</p>
+              <p class="nouba-excerpt">L'une des Noubas les plus ample et majestueuse, le Jaharka déploie une architecture musicale d'une grande complexité et d'une rare beauté.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 11 -->
+          <a href="nouba11.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">11</span>
+              <span class="nouba-mode">Mode :isbahân</span>
+              <h3 class="nouba-name">Noubat el-isbahân</h3>
+              <p class="nouba-name-ar">نوبة الاصبهان</p>
+              <p class="nouba-parts">7 mouvements · Mode doux et nostalgique</p>
+              <p class="nouba-excerpt">Le isbahân évoque les paysages andalous perdus, portant dans chaque phrase musicale une nostalgie teintée de douceur et de résignation sereine.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 12 -->
+          <a href="nouba12.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">12</span>
+              <span class="nouba-mode">Mode : rast al-dhil</span>
+              <h3 class="nouba-name">Noubat rast al-dhil </h3>
+              <p class="nouba-name-ar">نوبة رصد ذيل</p>
+              <p class="nouba-parts">7 mouvements · Mode festif et rythmé</p>
+              <p class="nouba-excerpt">Le rast al-dhil possède une énergie festive particulière. Ses rythmes entraînants en font l'une des Noubas les plus populaires lors des célébrations.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+                    <!-- Nouba 13 -->
+          <a href="nouba13.html" class="nouba-card-wrap">
+            <article class="nouba-card">
+              <span class="nouba-number">13</span>
+              <span class="nouba-mode">Mode : rast</span>
+              <h3 class="nouba-name">Noubat el-Rast</h3>
+              <p class="nouba-name-ar">نوبة الراست</p>
+              <p class="nouba-parts">7 mouvements · Mode lumineux et conclusif</p>
+              <p class="nouba-excerpt">La dernière des 13 Noubas, le rast clôt le cycle avec une lumière et une légèreté symboliques, comme un retour au calme après le voyage musical.</p>
+              <span class="nouba-link">Découvrir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </article>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ CTA ════ -->
+    <section class="cta-banner" aria-label="Appel à l'action">
+      <div class="container">
+        <h2>Découvrez les maîtres du Malouf</h2>
+        <p>Les Cheikhs ont dédié leur vie à la transmission de ce patrimoine. Explorez leurs biographies.</p>
+        <a href="cheikhs.html" class="btn btn-primary">Voir les Cheikhs</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="site-footer" aria-label="Pied de page">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <p class="footer-tagline">La plateforme numérique dédiée à la préservation et à la promotion du patrimoine Malouf tunisien.</p>
+          <span class="footer-ensi">Projet ENSI · La Manouba</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="bibliotheque.html">Bibliothèque</a></li>
+            <li><a href="cheikhs.html">Cheikhs</a></li>
+            <li><a href="patrimoine.html">Patrimoine</a></li>
+            <li><a href="evenements.html">Évènements</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Les Noubas</h4>
+          <ul>
+            <li><a href="bibliotheque.html">El-Dhil</a></li>
+            <li><a href="bibliotheque.html">El-'Asbain</a></li>
+            <li><a href="bibliotheque.html">El-Hsin</a></li>
+            <li><a href="bibliotheque.html">El-Rast</a></li>
+            <li><a href="bibliotheque.html">El-Nawat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Informations</h4>
+          <ul>
+            <li><a href="apropos.html">Le projet</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 NoubaTN — Tous droits réservés</p>
+        <p class="footer-note">École Nationale des Sciences de l'Informatique · ENSI, La Manouba, Tunisie</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

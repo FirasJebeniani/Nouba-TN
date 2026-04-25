@@ -1,0 +1,583 @@
+// Auteurs : May Hamrouni & Firas Jebiniani
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noubat el-Rahawi — NoubaTN</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Nouba detail page ── */
+    .nouba-hero {
+      background: var(--blue-primary);
+      padding: 5rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .nouba-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(135deg,transparent,transparent 60px,rgba(224,164,88,.04) 60px,rgba(224,164,88,.04) 61px);
+    }
+    .nouba-hero-inner {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .nouba-hero-content { flex: 1; }
+    .nouba-hero-num {
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 15vw, 11rem);
+      font-weight: 700;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .nouba-hero-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--lime);
+      background: rgba(255,255,255,0.07);
+      display: inline-block;
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+    .nouba-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 0.4rem;
+    }
+    .nouba-hero-ar {
+      font-size: 1.5rem;
+      color: rgba(255,255,255,0.4);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+    .nouba-hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .hero-tag {
+      font-family: var(--font-ui);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+    }
+    .hero-tag-mode { background: var(--lime); color: var(--blue-primary); font-weight: 700; }
+    .hero-tag-info { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+
+    /* ── Video section ── */
+    .video-section {
+      background: var(--blue-dark);
+      padding: 4rem 0;
+    }
+    .video-section .section-label { background: rgba(224,164,88,0.15); color: var(--lime); }
+    .video-section .section-title { color: #fff; }
+    .video-section .section-subtitle { color: var(--cream); }
+
+    /* ── Content ── */
+    .nouba-content { padding: 4rem 0; }
+    .nouba-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .content-block { margin-bottom: 2.5rem; }
+    .content-block-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--lime);
+      display: inline-block;
+    }
+    .content-block p {
+      font-size: 1.02rem;
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── Movements ── */
+    .movements-section { background: var(--gray-light); padding: 4rem 0; }
+    .movements-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .mvt-card {
+      background: #fff;
+      border-radius: var(--radius-card);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--lime);
+    }
+    .mvt-num { font-size: 2.2rem; line-height: 1; margin-bottom: 0.5rem; }
+    .mvt-name {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue-primary);
+      margin-bottom: 0.5rem;
+    }
+    .mvt-desc { font-size: 0.82rem; color: #666; line-height: 1.5; }
+
+    /* ── Nav ── */
+    .nouba-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      margin-top: 3rem;
+    }
+    .nav-prev, .nav-next {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue-primary);
+      padding: 0.7rem 1.4rem;
+      border: 2px solid var(--blue-primary);
+      transition: all var(--transition);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .nav-prev:hover, .nav-next:hover { background: var(--blue-primary); color: var(--lime); }
+    .back-to-lib {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--lime);
+      text-decoration: none;
+    }
+    .back-to-lib:hover { text-decoration: underline; }
+
+    @media (max-width: 900px) {
+      .nouba-grid { grid-template-columns: 1fr; gap: 0; }
+      .movements-grid { grid-template-columns: repeat(3,1fr); }
+      .nouba-hero-num { display: none; }
+    }
+    @media (max-width: 600px) {
+      .movements-grid { grid-template-columns: 1fr 1fr; }
+    }
+  
+    /* ── Video + Partition sections ── */
+    .video-section {
+      background: var(--blue-dark);
+      padding: 4rem 0;
+    }
+    .video-section .section-label { background: rgba(224,164,88,0.15); color: var(--lime); }
+    .video-section .section-title { color: #fff; }
+    .video-section .section-subtitle { color: var(--cream); }
+    .partition-section {
+      background: var(--gray-light);
+      padding: 4rem 0;
+    }
+    .partition-embed {
+      margin-top: 2rem;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(13,27,42,0.1);
+    }
+    .partition-embed iframe {
+      width: 100%;
+      height: 600px;
+      border: 0;
+      display: block;
+    }
+    .partition-download {
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue-primary);
+      padding: 0.7rem 1.4rem;
+      border: 2px solid var(--blue-primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .partition-download1 {
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue-primary);
+      padding: 0.7rem 1.4rem;
+      border: 2px solid var(--blue-primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .partition-download:hover {
+      background: var(--blue-primary);
+      color: var(--lime);
+    }
+    .partition-download1:hover {
+      background: black;
+      color: var(--lime);
+    }
+
+    /* ── Lecteur Audio ── */
+    .audio-player-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(224,164,88,0.08) 100%);
+      border: 1px solid rgba(224,164,88,0.2);
+      border-radius: 16px;
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      backdrop-filter: blur(10px);
+    }
+    .audio-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--lime);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+      border: none;
+    }
+    .audio-icon:hover { transform: scale(1.08); background: #d4c048; }
+    .audio-icon svg { width: 28px; height: 28px; fill: var(--blue-primary); }
+    .audio-info { flex: 1; }
+    .audio-nouba-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+    .audio-nouba-sub {
+      font-family: var(--font-ui);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 1rem;
+    }
+    .audio-progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .audio-progress {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 100px;
+      cursor: pointer;
+      position: relative;
+    }
+    .audio-progress-bar {
+      height: 100%;
+      background: var(--lime);
+      border-radius: 100px;
+      width: 0%;
+      transition: width 0.1s linear;
+      pointer-events: none;
+    }
+    .audio-time {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+      min-width: 70px;
+      text-align: right;
+    }
+    .audio-volume {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .audio-volume svg { width: 14px; height: 14px; stroke: rgba(255,255,255,0.5); fill: none; flex-shrink: 0; }
+    .audio-volume input[type=range] {
+      -webkit-appearance: none;
+      width: 80px;
+      height: 3px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 100px;
+      outline: none;
+    }
+    .audio-volume input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      background: var(--lime);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="NoubaTN — Accueil">
+        <img src="logo.jpg" alt="NoubaTN" class="logo-img" />
+        <span>
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <span class="logo-tagline">Patrimoine Malouf Tunisien</span>
+        </span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-hamburger" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </label>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <ul class="nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="bibliotheque.html">Bibliothèque</a></li>
+          <li><a href="cheikhs.html">Cheikhs</a></li>
+          <li><a href="patrimoine.html">Patrimoine</a></li>
+          <li><a href="evenements.html">Évènements</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <div class="container">
+        <ol class="breadcrumb-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="bibliotheque.html">Bibliothèque</a></li>
+          <li>Noubat el-isbahân</li>
+        </ol>
+      </div>
+    </nav>
+
+    <section class="nouba-hero" aria-label="En-tête Noubat el-isbahân">
+      <div class="container nouba-hero-inner">
+        <div class="nouba-hero-content">
+          <span class="nouba-hero-label">Nouba 11 &nbsp;·&nbsp; Malouf tunisien</span>
+          <h1 class="nouba-hero-title">Noubat el-isbahân</h1>
+          <p class="nouba-hero-ar">نوبة الاصبهان</p>
+          <div class="nouba-hero-tags">
+            <span class="hero-tag hero-tag-mode">Mode : isbahân</span>
+            <span class="hero-tag hero-tag-info">7 mouvements</span>
+            <span class="hero-tag hero-tag-info">Mode doux et nostalgique</span>
+          </div>
+        </div>
+        <div class="nouba-hero-num" aria-hidden="true">11</div>
+      </div>
+    </section>
+
+    <section class="nouba-content">
+      <div class="container">
+        <div class="nouba-grid">
+          <div>
+            <div class="content-block">
+              <span class="content-block-title">Présentation</span>
+              <p>La <strong>Noubat el-isbahân</strong> baigne dans le mode <em>isbahân</em>, dont la douceur mélancolique évoque irrésistiblement les paysages perdus d'al-Andalus. Chaque phrase musicale semble porter le poids doux et résigné d'une mémoire collective millénaire.</p>
+              <p>Elle est considérée comme l'expression musicale la plus aboutie de la nostalgie andalouse (al-hanin ila al-Andalus) dans le Malouf tunisien.</p>
+            </div>
+            <div class="content-block">
+              <span class="content-block-title">Mémoire de l'Andalousie</span>
+              <p>Les musicologues voient dans la Noubat el-isbahân le témoignage le plus direct de la tradition musicale de Séville et Cordoue. Certaines de ses mélodies présentent des parallèles frappants avec des pièces de flamenco andalou.</p>
+            </div>
+          </div>
+          <div>
+            <div class="content-block">
+              <span class="content-block-title">La Nouba du souvenir</span>
+              <p>Parmi les textes interprétés dans la Noubat el-isbahân, plusieurs évoquent directement les villes perdues : Grenade, Cordoue, Séville. Ces poèmes d'exil des XVe–XVIe siècles trouvent dans le mode isbahân leur expression musicale la plus juste.</p>
+            </div>
+          </div>
+        </div>
+
+        <nav class="nouba-nav" aria-label="Navigation entre Noubas">
+          <a href="nouba10.html" class="nav-prev">&larr; Nouba 10</a>
+          <a href="bibliotheque.html" class="back-to-lib">↩ Retour à la bibliothèque</a>
+          <a href="nouba12.html" class="nav-next">Nouba 12 &rarr;</a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="movements-section" aria-labelledby="mvt-title-1">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Architecture</span>
+          <h2 class="section-title" id="mvt-title-1">Les 7 mouvements</h2>
+          <p class="section-subtitle">Du plus lent et solennel au plus vif et festif.</p>
+        </header>
+        <div class="movements-grid">
+          <div class="mvt-card">
+            <div class="mvt-num">①</div>
+            <div class="mvt-name">Msaddar</div>
+            <div class="mvt-desc">Msaddar
+              Ouverture instrumentale composée de deux ou trois strophes (appelées khana) intercalées avec un refrain.
+              De rythme lent (6/4), 
+              le msaddar se termine par deux strophes de rythme ternaire plus rapide : le tawq (collier) et la silsila (chaîne).</div>
+          </div>
+          <div class="mvt-card">
+            <div class="mvt-num">②</div>
+            <div class="mvt-name">abyat</div>
+            <div class="mvt-desc">Précédés d'un court prélude musical de rythme rapide,
+              (barawal à 2/4), les abyat commencent sur un rythme lent.</div>
+          </div>
+
+          <div class="mvt-card">
+            <div class="mvt-num">③</div>
+            <div class="mvt-name">Btayhi</div>
+            <div class="mvt-desc">Ce sont des vers chantés sur le rythme à 4/4 du même nom. Ils sont généralement précédés d'un court prélude
+               instrumental joué sur un rythme rapide (barwal) ou lent (btâyhî).</div>
+          </div>
+          <div class="mvt-card">
+            <div class="mvt-num">④</div>
+            <div class="mvt-name">Barawil</div>
+            <div class="mvt-desc">Ce sont des chants d'allure rapide exécutés sur le rythme barawal(2/4)</div>
+          </div>
+          <div class="mvt-card">
+            <div class="mvt-num">⑤</div>
+            <div class="mvt-name">Draj</div>
+            <div class="mvt-desc"> C'ést un chant composé dans un rythme lent (6/4) 
+              et précédé d'une courte introduction non mesurée appelée farigha</div>
+          </div>
+          <div class="mvt-card">
+            <div class="mvt-num">⑥ </div>
+            <div class="mvt-name">khafif</div>
+            <div class="mvt-desc">Chant de rythme lent (6/4) précédé lui aussi d'une farigha</div>
+          </div>
+          <div class="mvt-card">
+            <div class="mvt-num">⑦</div>
+            <div class="mvt-name">Khatm</div>
+            <div class="mvt-desc">Clôture festive et rayonnante du cycle</div>
+          </div>
+        </div>
+      </div>
+    </section>
+      <section class="video-section" aria-labelledby="video-title-11">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Écoute</span>
+          <h2 class="section-title" id="video-title-11">Extrait Musical</h2>
+          <p class="section-subtitle">Découvrez un extrait de la Nouba 11 — Noubat el-isbahân</p>
+        </header>
+        <div class="audio-player-card">
+          <button class="audio-icon" id="btn-play-11" onclick="togglePlay11()" aria-label="Lecture / Pause">
+            <svg id="icon-play-11" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+          <div class="audio-info">
+            <div class="audio-nouba-name">Noubat el-isbahân &nbsp;·&nbsp; <span style="font-size:0.9rem;color:rgba(255,255,255,0.5);">نوبة الاصبهان</span></div>
+            <div class="audio-nouba-sub">Nouba 11 — Malouf Tunisien</div>
+            <div class="audio-progress-wrap">
+              <div class="audio-progress" id="prog-11" onclick="seekAudio11(event)">
+                <div class="audio-progress-bar" id="progbar-11"></div>
+              </div>
+              <span class="audio-time" id="time-11">0:00 / 0:00</span>
+            </div>
+            <div class="audio-volume">
+              <svg viewBox="0 0 24 24" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              <input type="range" min="0" max="1" step="0.05" value="0.8" oninput="setVol11(this.value)" aria-label="Volume">
+            </div>
+          </div>
+        </div>
+        <audio id="audio-11" src="audio/nouba.mp3" preload="metadata"></audio>
+      </div>
+    </section>
+    <script>
+    (function() {
+      var audio = document.getElementById('audio-11');
+      var btn   = document.getElementById('btn-play-11');
+      var bar   = document.getElementById('progbar-11');
+      var time  = document.getElementById('time-11');
+      var playing = false;
+      var iconPlay  = '<svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:var(--blue-primary)"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+      var iconPause = '<svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:var(--blue-primary)"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+      function fmt(s) { var m=Math.floor(s/60); var sec=Math.floor(s%60); return m+':'+(sec<10?'0':'')+sec; }
+      audio.addEventListener('timeupdate', function() {
+        if (!audio.duration) return;
+        bar.style.width = (audio.currentTime/audio.duration*100)+'%';
+        time.textContent = fmt(audio.currentTime)+' / '+fmt(audio.duration);
+      });
+      audio.addEventListener('ended', function() { playing=false; btn.innerHTML=iconPlay; bar.style.width='0%'; });
+      window.togglePlay11 = function() { if(playing){audio.pause();btn.innerHTML=iconPlay;}else{audio.play();btn.innerHTML=iconPause;} playing=!playing; };
+      window.seekAudio11 = function(e) { var rect=document.getElementById('prog-11').getBoundingClientRect(); audio.currentTime=(e.clientX-rect.left)/rect.width*audio.duration; };
+      window.setVol11  = function(v) { audio.volume=v; };
+      audio.volume=0.8;
+    })();
+    </script>
+
+</main>
+
+  <footer class="site-footer" aria-label="Pied de page">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-text">Nouba<span class="logo-accent">TN</span></span>
+          <p class="footer-tagline">La plateforme numérique dédiée à la préservation et à la promotion du patrimoine Malouf tunisien.</p>
+          <span class="footer-ensi">Projet ENSI · La Manouba</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="bibliotheque.html">Bibliothèque</a></li>
+            <li><a href="cheikhs.html">Cheikhs</a></li>
+            <li><a href="patrimoine.html">Patrimoine</a></li>
+            <li><a href="evenements.html">Évènements</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Les Noubas</h4>
+          <ul>
+            <li><a href="nouba1.html">El-Dhil</a></li>
+            <li><a href="nouba2.html">El-'Asbain</a></li>
+            <li><a href="nouba3.html">El-Hsin</a></li>
+            <li><a href="nouba4.html">El-Rast</a></li>
+            <li><a href="nouba5.html">El-Nawat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Informations</h4>
+          <ul>
+            <li><a href="apropos.html">Le projet</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2025 NoubaTN — Tous droits réservés</p>
+        <p class="footer-note">École Nationale des Sciences de l'Informatique · ENSI, La Manouba, Tunisie</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
